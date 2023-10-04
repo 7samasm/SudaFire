@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1051426179901",
+    "firebase_url": "https://shop-97e7e-default-rtdb.firebaseio.com",
+    "project_id": "shop-97e7e",
+    "storage_bucket": "shop-97e7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051426179901:android:8c99e65a4cbe79c7021354",
+        "android_client_info": {
+          "package_name": "com.example.shop_fire"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtBjK9H99PObnUYEhH8b_Ww97zRhOjHu4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
