@@ -8,82 +8,73 @@ class Body extends StatelessWidget {
     super.key,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('products')
-            .orderBy(
-              'createdAt',
-              descending: true,
-            )
-            .snapshots(),
-        builder: (context, productSnapShots) {
-          if (!productSnapShots.hasData) {
-            return const Text('empty ...');
-          }
-          if (productSnapShots.hasError) {
-            return const Text('something goes wrong');
-          }
-          final products = productSnapShots.data!.docs
-              .map(
-                (e) => {
-                  'title': e.data()['title'],
-                  'price': e.data()['price'],
-                  'description': e.data()['description'],
-                  'imageUrl': e.data()['imageUrl'],
-                  'category': e.data()['category'],
-                  'createdAt': e.data()['createdAt'].toString(),
-                },
-              )
-              .toList();
-
-          List<Map<String, Object>> data = getData(products);
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-              //   child: Text(
-              //     "Women",
-              //     style: Theme.of(context)
-              //         .textTheme
-              //         .headlineSmall!
-              //         .copyWith(fontWeight: FontWeight.bold),
-              //   ),
-              // ),
-              // const CategoriesList(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      for (var item in data) ProductListHorizonScroll(item),
-                      const SizedBox(height: kDefaultPaddin + 10)
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
+  Map<String, Object> _getCategoryStream(String category) {
+    final fs = FirebaseFirestore.instance
+        .collection('products')
+        .where('category', isEqualTo: category)
+        .orderBy(
+          'createdAt',
+          // descending: true,
+        )
+        .limit(5);
+    return {
+      'stream': fs.snapshots(),
+      'count': FirebaseFirestore.instance
+          .collection('products')
+          .where('category', isEqualTo: category)
+          .count()
+          .get()
+          .asStream(),
+    };
   }
 
-  List<Map<String, Object>> getData(List<Map<String, dynamic>> products) {
-    final laptops = products.where((el) => el['category'] == 'laptops');
-    final phones = products.where((el) => el['category'] == 'phones');
-    // print(products);
-    final data = [
-      {
-        'count': laptops.length,
-        'category': 'laptops',
-        'products': laptops,
-      },
-      {
-        'count': phones.length,
-        'category': 'phones',
-        'products': phones,
-      }
-    ];
-    return data;
+  @override
+  Widget build(BuildContext context) {
+    final laptopStream = _getCategoryStream('laptops');
+    final phonesStream = _getCategoryStream('phones');
+    final clothesStream = _getCategoryStream('clothes');
+
+    // print('===========> ${laptopStream["count"]}');
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+        //   child: Text(
+        //     "Women",
+        //     style: Theme.of(context)
+        //         .textTheme
+        //         .headlineSmall!
+        //         .copyWith(fontWeight: FontWeight.bold),
+        //   ),
+        // ),
+        // const CategoriesList(),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ProductListHorizonScroll(
+                  laptopStream['stream'] as Stream,
+                  laptopStream['count'] as Stream,
+                ),
+                ProductListHorizonScroll(
+                  phonesStream['stream'] as Stream,
+                  phonesStream['count'] as Stream,
+                ),
+                // ProductListHorizonScroll(
+                //   clothesStream['stream'] as Stream,
+                //   laptopStream['count']!,
+                // ),
+
+                // ProductListHorizonScroll(phonesStream['stream'] as Stream, ),
+                // ProductListHorizonScroll(clothesStream['stream'] as Stream, ),
+                const SizedBox(height: kDefaultPaddin + 10)
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
