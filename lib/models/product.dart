@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:shop_fire/models/category.dart';
 
 class Product {
@@ -16,6 +17,17 @@ class Product {
   final String imageUrl;
   final double price;
   final String createdAt;
+
+  factory Product.fromMap(Map<String, dynamic> json) {
+    return Product(
+      title: json['title'],
+      description: json['description'],
+      category: json['category'],
+      imageUrl: json['imageUrl'],
+      price: json['price'],
+      createdAt: json['createdAt'].toString(),
+    );
+  }
 }
 
 List<Product> dummyProducts = [

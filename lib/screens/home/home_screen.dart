@@ -89,6 +89,18 @@ Widget buildDrawer(BuildContext context) {
         ),
         ListTile(
           dense: true,
+          leading: const Icon(Icons.shopping_cart_outlined),
+          title: const Text('cart'),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const CartScreen(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          dense: true,
           leading: const Icon(Icons.exit_to_app),
           title: const Text('log out'),
           onTap: () {
