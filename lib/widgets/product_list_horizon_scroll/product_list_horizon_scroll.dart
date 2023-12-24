@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:shop_fire/screens/home/widgets/product_item.dart';
+import 'package:shop_fire/widgets/product_card_item/product_item.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../constans.dart';
-import '../../../models/product.dart';
+import '../../constans.dart';
+import '../../models/product.dart';
 
 class ProductListHorizonScroll extends StatefulWidget {
   const ProductListHorizonScroll(
@@ -33,21 +33,6 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
   int _totalResults = 0;
   int _page = 1;
   int get _totalPages => (_totalResults / PAGE_SIZE).ceil();
-
-  // _scrollListener() {
-  //   if (_scrollController.offset >=
-  //       _scrollController.position.maxScrollExtent) {
-  //     // if (_page == _totalPages) {
-  //     //   return;
-  //     // }
-  //     // _page++;
-  //     _fetch();
-  //   }
-  // }
-
-  // _fetch() async {
-  //   // print(widget.count.toString());
-  // }
 
   Future<void> _fetchFirebaseData() async {
     if (_isLoading) {
@@ -202,41 +187,6 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
                 ],
               ),
             ),
-    );
-  }
-}
-
-class SeeAllButton extends StatelessWidget {
-  const SeeAllButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        right: kDefaultPaddin,
-        left: kDefaultPaddin / 4,
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.arrow_forward_outlined,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            // const SizedBox(height: 5),
-            Text(
-              'see all',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

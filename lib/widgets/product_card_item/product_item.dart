@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../constans.dart';
-import '../../../models/product.dart';
-import '../../details/details_screen.dart';
+import '../../constans.dart';
+import '../../models/product.dart';
+import '../../screens/details/details_screen.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem(

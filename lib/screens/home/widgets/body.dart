@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
-import 'product_list_horizon_scroll.dart';
+import '../../../widgets/product_list_horizon_scroll/product_list_horizon_scroll.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -29,6 +29,7 @@ class Body extends StatelessWidget {
               children: [
                 ProductListHorizonScroll('laptops'),
                 ProductListHorizonScroll('phones'),
+                // ProductListHorizonScroll('clothes'),
                 SizedBox(height: kDefaultPaddin + 10)
               ],
             ),
