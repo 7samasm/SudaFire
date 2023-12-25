@@ -27,7 +27,6 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
 
   List<Product> _products = [];
   static const PAGE_SIZE = 5;
-  bool _allFetched = false;
   bool _isLoading = false;
   DocumentSnapshot? _lastDocument;
   int _totalResults = 0;
@@ -38,58 +37,51 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
     if (_isLoading) {
       return;
     }
+
     setState(() {
       _isLoading = true;
     });
-    Query _query = FirebaseFirestore.instance
+    //query
+    Query query = FirebaseFirestore.instance
         .collection("products")
         .where('category', isEqualTo: widget.category)
         .orderBy('createdAt');
+    // get total count before limit  from query above
     if (_lastDocument != null) {
-      _query = _query.startAfterDocument(_lastDocument!).limit(PAGE_SIZE);
-    } else {
-      _query = _query.limit(PAGE_SIZE);
+      print('/*/*/* cld');
+      var count = (await query.count().get()).count;
+
+      setState(() {
+        _totalResults = count;
+      });
     }
 
-    final List<Product> pagedData = await _query.get().then((value) {
-      if (value.docs.isNotEmpty) {
-        _lastDocument = value.docs.last;
-      } else {
-        _lastDocument = null;
-      }
-      return value.docs
-          .map((e) => Product.fromMap(e.data() as Map<String, dynamic>))
-          .toList();
-    });
+    // get first result or next page depending on last doc exitence
+    query = _lastDocument != null
+        ? query.startAfterDocument(_lastDocument!).limit(PAGE_SIZE)
+        : query.limit(PAGE_SIZE);
 
-    setState(() {
-      _products.addAll(pagedData);
-      if (pagedData.length < PAGE_SIZE) {
-        _allFetched = true;
-      }
-      _isLoading = false;
-    });
+    final value = await query.get();
+
+    // get last doc if fetched result not empty
+    _lastDocument = value.docs.isNotEmpty ? value.docs.last : null;
+
+    final List<Product> fetchedProducts = value.docs
+        .map((e) => Product.fromMap(e.data() as Map<String, dynamic>))
+        .toList();
+
+    setState(
+      () {
+        _products.addAll(fetchedProducts);
+        _isLoading = false;
+      },
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    _getTotalResults();
     _fetchFirebaseData();
-  }
-
-  void _getTotalResults() {
-    FirebaseFirestore.instance
-        .collection("products")
-        .where('category', isEqualTo: widget.category)
-        .count()
-        .get()
-        .then(
-          (res) => setState(() {
-            _totalResults = res.count;
-          }),
-          onError: (e) => print("Error completing: $e"),
-        );
   }
 
   @override
@@ -101,12 +93,12 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: kDefaultPaddin + 10),
-                Text(_products[0].category),
-                Text('$_totalResults results'),
-                const SizedBox(height: kDefaultPaddin / 2),
+                // const SizedBox(height: kDefaultPaddin + 10),
+                // Text(_products[0].category),
+                // Text('$_totalResults results'),
+                // const SizedBox(height: kDefaultPaddin / 2),
                 SizedBox(
-                  height: 200,
+                  height: 180,
                   // width: 200,
                   child: NotificationListener<ScrollEndNotification>(
                     child: ListView.builder(
@@ -156,10 +148,10 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: kDefaultPaddin),
-                  Text('mmmmm'),
-                  Text('mmm'),
-                  SizedBox(height: kDefaultPaddin),
+                  // SizedBox(height: kDefaultPaddin),
+                  // Text('mmmmm'),
+                  // Text('mmm'),
+                  // SizedBox(height: kDefaultPaddin),
                   SizedBox(
                     height: 200,
                     child: ListView.builder(

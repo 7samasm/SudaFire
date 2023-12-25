@@ -9,7 +9,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Padding(
@@ -26,8 +26,11 @@ class Body extends StatelessWidget {
         Expanded(
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                buildScrollTitle('laptops', context),
                 ProductListHorizonScroll('laptops'),
+                buildScrollTitle('phones', context),
                 ProductListHorizonScroll('phones'),
                 // ProductListHorizonScroll('clothes'),
                 SizedBox(height: kDefaultPaddin + 10)
@@ -38,4 +41,14 @@ class Body extends StatelessWidget {
       ],
     );
   }
+}
+
+Padding buildScrollTitle(String text, BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.only(left: kDefaultPaddin),
+    child: Text(
+      text,
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(height: 3),
+    ),
+  );
 }
