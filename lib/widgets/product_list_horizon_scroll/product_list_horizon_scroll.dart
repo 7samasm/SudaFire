@@ -25,13 +25,14 @@ class ProductListHorizonScroll extends StatefulWidget {
 class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
   final ScrollController _scrollController = ScrollController();
 
+  // ignore: prefer_final_fields
   List<Product> _products = [];
-  static const PAGE_SIZE = 5;
+  static const kPageSize = 5;
   bool _isLoading = false;
   DocumentSnapshot? _lastDocument;
   int _totalResults = 0;
   int _page = 1;
-  int get _totalPages => (_totalResults / PAGE_SIZE).ceil();
+  int get _totalPages => (_totalResults / kPageSize).ceil();
 
   Future<void> _fetchFirebaseData() async {
     if (_isLoading) {
@@ -48,7 +49,6 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
         .orderBy('createdAt');
     // get total count before limit  from query above
     if (_lastDocument != null) {
-      print('/*/*/* cld');
       var count = (await query.count().get()).count;
 
       setState(() {
@@ -58,8 +58,8 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
 
     // get first result or next page depending on last doc exitence
     query = _lastDocument != null
-        ? query.startAfterDocument(_lastDocument!).limit(PAGE_SIZE)
-        : query.limit(PAGE_SIZE);
+        ? query.startAfterDocument(_lastDocument!).limit(kPageSize)
+        : query.limit(kPageSize);
 
     final value = await query.get();
 
@@ -125,12 +125,13 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
                           final product = _products[i];
                           return ProductItem(product);
                         }
+
+                        return null;
                       },
                     ),
                     onNotification: (scrollEnd) {
                       if (scrollEnd.metrics.atEdge &&
                           scrollEnd.metrics.pixels > 0) {
-                        print('***** $_totalPages');
                         if (_page < _totalPages) {
                           _page++;
 

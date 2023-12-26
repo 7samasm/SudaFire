@@ -29,11 +29,11 @@ class Body extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 buildScrollTitle('laptops', context),
-                ProductListHorizonScroll('laptops'),
+                const ProductListHorizonScroll('laptops'),
                 buildScrollTitle('phones', context),
-                ProductListHorizonScroll('phones'),
+                const ProductListHorizonScroll('phones'),
                 // ProductListHorizonScroll('clothes'),
-                SizedBox(height: kDefaultPaddin + 10)
+                const SizedBox(height: kDefaultPaddin + 10)
               ],
             ),
           ),

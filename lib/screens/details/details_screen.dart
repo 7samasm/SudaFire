@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop_fire/constans.dart';
 import 'package:shop_fire/models/product.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/details/widgets/body.dart';
 
 import '../cart/cart_screen.dart';
-import 'widgets/colors_radio_group.dart';
 
 class DetailsScreen extends ConsumerWidget {
   const DetailsScreen({

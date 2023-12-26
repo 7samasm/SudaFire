@@ -56,7 +56,6 @@ class CartTile extends ConsumerWidget {
             },
             icon: const Icon(
               Icons.delete_outline_rounded,
-              color: Colors.grey,
             ),
           )
         ],
