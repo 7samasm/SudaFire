@@ -3,7 +3,6 @@ import 'package:shop_fire/models/product.dart';
 
 import '../../../constans.dart';
 import '../../../widgets/product_list_horizon_scroll/product_list_horizon_scroll.dart';
-import '../../home/widgets/body.dart';
 import 'colors_radio_group.dart';
 
 class Body extends StatelessWidget {
@@ -81,10 +80,14 @@ class Body extends StatelessWidget {
             ),
           ),
           const SizedBox(height: kDefaultPaddin * 3),
-          buildScrollTitle('see also', context),
-          const ProductListHorizonScroll('laptops'),
-          buildScrollTitle('related', context),
-          const ProductListHorizonScroll('laptops'),
+          const ProductListHorizonScroll(
+            category: 'laptops',
+            title: 'see also',
+          ),
+          const ProductListHorizonScroll(
+            category: 'laptops',
+            title: 'related',
+          ),
         ],
       ),
     );

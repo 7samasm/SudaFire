@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../constans.dart';
 import '../../../widgets/product_list_horizon_scroll/product_list_horizon_scroll.dart';
 
 class Body extends StatelessWidget {
@@ -9,7 +8,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Padding(
@@ -28,12 +27,8 @@ class Body extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildScrollTitle('laptops', context),
-                const ProductListHorizonScroll('laptops'),
-                buildScrollTitle('phones', context),
-                const ProductListHorizonScroll('phones'),
-                // ProductListHorizonScroll('clothes'),
-                const SizedBox(height: kDefaultPaddin + 10)
+                ProductListHorizonScroll(category: 'laptops', title: 'laptops'),
+                ProductListHorizonScroll(category: 'phones', title: 'phones'),
               ],
             ),
           ),
@@ -41,14 +36,4 @@ class Body extends StatelessWidget {
       ],
     );
   }
-}
-
-Padding buildScrollTitle(String text, BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(left: kDefaultPaddin),
-    child: Text(
-      text,
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(height: 3),
-    ),
-  );
 }

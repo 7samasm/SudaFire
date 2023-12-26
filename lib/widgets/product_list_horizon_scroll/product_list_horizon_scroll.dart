@@ -8,14 +8,16 @@ import '../../constans.dart';
 import '../../models/product.dart';
 
 class ProductListHorizonScroll extends StatefulWidget {
-  const ProductListHorizonScroll(
-    this.category, {
+  const ProductListHorizonScroll({
+    required this.category,
+    required this.title,
     super.key,
   });
 
   // final Map<String, dynamic> data;
 
   final String category;
+  final String title;
 
   @override
   State<ProductListHorizonScroll> createState() =>
@@ -93,10 +95,14 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const SizedBox(height: kDefaultPaddin + 10),
-                // Text(_products[0].category),
+                Text(
+                  widget.title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(height: 3),
+                ),
                 // Text('$_totalResults results'),
-                // const SizedBox(height: kDefaultPaddin / 2),
                 SizedBox(
                   height: 180,
                   // width: 200,
@@ -149,10 +155,10 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // SizedBox(height: kDefaultPaddin),
-                  // Text('mmmmm'),
-                  // Text('mmm'),
-                  // SizedBox(height: kDefaultPaddin),
+                  const Text(
+                    'mmmmm',
+                    style: TextStyle(height: 3),
+                  ),
                   SizedBox(
                     height: 200,
                     child: ListView.builder(
