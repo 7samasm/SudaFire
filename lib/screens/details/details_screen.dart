@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/models/product.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/details/widgets/body.dart';
+import 'package:shop_fire/screens/home/home_screen.dart';
 
 import '../cart/cart_screen.dart';
 
@@ -38,6 +39,17 @@ class DetailsScreen extends ConsumerWidget {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.favorite_outline),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.home_outlined),
           ),
         ],
       ),
