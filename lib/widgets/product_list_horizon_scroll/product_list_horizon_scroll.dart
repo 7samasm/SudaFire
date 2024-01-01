@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shop_fire/widgets/product_card_item/product_item.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:shop_fire/widgets/product_list_horizon_scroll/product_list_loader.dart';
 
 import '../../constans.dart';
 import '../../models/product.dart';
@@ -25,8 +25,6 @@ class ProductListHorizonScroll extends StatefulWidget {
 }
 
 class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
-  final ScrollController _scrollController = ScrollController();
-
   // ignore: prefer_final_fields
   List<Product> _products = [];
   static const kPageSize = 5;
@@ -108,7 +106,6 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
                   // width: 200,
                   child: NotificationListener<ScrollEndNotification>(
                     child: ListView.builder(
-                      controller: _scrollController,
                       scrollDirection: Axis.horizontal,
                       itemCount: _products.length + 1,
                       itemBuilder: (ctx, i) {
@@ -140,7 +137,6 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
                           scrollEnd.metrics.pixels > 0) {
                         if (_page < _totalPages) {
                           _page++;
-
                           _fetchFirebaseData();
                         }
                       }
@@ -150,42 +146,7 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
                 ),
               ],
             )
-          : Skeletonizer(
-              enabled: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'mmmmm',
-                    style: TextStyle(height: 3),
-                  ),
-                  SizedBox(
-                    height: 200,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return const Card(
-                          child: SizedBox(
-                            height: 50,
-                            width: 120,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CircleAvatar(),
-                                Text('mmm'),
-                                Text('mmmmmmmmm'),
-                                Text('mmmmmmmm'),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          : const ProductListLoader(),
     );
   }
 }
