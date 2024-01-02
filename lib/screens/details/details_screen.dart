@@ -20,6 +20,21 @@ class DetailsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(product.title),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.home),
+          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(Icons.favorite_outline),
+          // ),
           Badge.count(
             count: totalItems,
             offset: const Offset(-3, 0),
@@ -35,21 +50,6 @@ class DetailsScreen extends ConsumerWidget {
               },
               icon: const Icon(Icons.shopping_cart_outlined),
             ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_outline),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomeScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.home_outlined),
           ),
         ],
       ),

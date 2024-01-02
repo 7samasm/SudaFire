@@ -27,6 +27,13 @@ AppBar buildAppBar(BuildContext ctx, int totalItems) {
     backgroundColor: Colors.white,
     elevation: 0,
     actions: <Widget>[
+      IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: () {
+          // showSearch(context: ctx, delegate: Search);
+        },
+      ),
+
       Badge.count(
         count: totalItems,
         offset: const Offset(-3, 0),
@@ -43,10 +50,7 @@ AppBar buildAppBar(BuildContext ctx, int totalItems) {
           icon: const Icon(Icons.shopping_cart_outlined),
         ),
       ),
-      IconButton(
-        icon: const Icon(Icons.search),
-        onPressed: () {},
-      ),
+
       // IconButton(
       //   icon: Icon(Icons.shopping_cart_outlined),
       //   onPressed: () {},
