@@ -30,10 +30,9 @@ class CartScreen extends ConsumerWidget {
             children: [
               Text.rich(
                 TextSpan(
+                  text: 'total\n',
+                  style: Theme.of(context).textTheme.bodyLarge,
                   children: [
-                    TextSpan(
-                        text: 'total\n',
-                        style: Theme.of(context).textTheme.bodyLarge),
                     TextSpan(
                       text: '\$${_getTotalPrice(cartItems)}',
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(

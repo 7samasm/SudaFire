@@ -42,7 +42,7 @@ class CartTile extends ConsumerWidget {
           IconButton(
             onPressed: () {
               if (cartItem.intQty == 1) {
-                return;
+                ref.read(cartProvider.notifier).deleteCartItem(cartItem);
               }
               ref
                   .read(cartProvider.notifier)

@@ -100,7 +100,7 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
                       .bodyLarge!
                       .copyWith(height: 3),
                 ),
-                // Text('$_totalResults results'),
+                Text('$_totalResults results'),
                 SizedBox(
                   height: 180,
                   // width: 200,

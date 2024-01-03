@@ -55,10 +55,10 @@ class CartSummary extends StatelessWidget {
                           label: Text(
                             cartItems[index].quantity.toStringAsFixed(0),
                           ),
-                          child: CircleAvatar(
-                            child: Text(
-                              title.substring(0, 1).toUpperCase(),
-                            ),
+                          child: const FadeInImage(
+                            image: /* NetworkImage(cartItem.product.imageUrl), */
+                                AssetImage('assets/images/bag_6.png'),
+                            placeholder: AssetImage('assets/images/bag_6.png'),
                           ),
                         ),
                         title: Text(title),
@@ -75,29 +75,34 @@ class CartSummary extends StatelessWidget {
                     },
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
-                  padding: const EdgeInsets.all(kDefaultPaddin),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: kDefaultPaddin,
+                    vertical: kDefaultPaddin / 3.5,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text.rich(
                         TextSpan(
                           text: 'total\n',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.bodyLarge,
                           children: [
                             TextSpan(
                               text: totalPrice.toStringAsFixed(2),
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
                         ),
                       ),
                       const Spacer(),
                       TextButton.icon(
-                        onPressed: () {},
-                        label: const Text('order'),
-                        icon: const Icon(Icons.check),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        label: const Text('pay'),
+                        icon: const Icon(Icons.payment_outlined),
                         style: TextButton.styleFrom(
                           foregroundColor:
                               Theme.of(context).colorScheme.secondary,

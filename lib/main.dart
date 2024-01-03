@@ -21,7 +21,7 @@ void main() async {
 }
 
 var kcolorScheme = ColorScheme.fromSeed(
-  seedColor: Colors.deepPurple,
+  seedColor: Colors.black,
   secondary: Colors.pink,
 );
 
@@ -40,10 +40,10 @@ class MyApp extends StatelessWidget {
           backgroundColor: kcolorScheme.background,
           foregroundColor: kcolorScheme.primary,
         ),
-        // cardTheme: const CardTheme().copyWith(
-        //   color: kcolorScheme.primaryContainer,
-        //   // margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        // ),
+        cardTheme: const CardTheme().copyWith(
+          color: kcolorScheme.primaryContainer,
+          // margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        ),
         useMaterial3: true,
       ),
       home: StreamBuilder(

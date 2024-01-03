@@ -49,19 +49,16 @@ class Body extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(kDefaultPaddin / 2),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                      width: 2.5,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    // ignore: prefer_interpolation_to_compose_strings
-                    '\$ ' + product.price.toStringAsFixed(2),
-                    style: Theme.of(context).textTheme.titleMedium,
+                Text.rich(
+                  TextSpan(
+                    text: 'price\n',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    children: [
+                      TextSpan(
+                        text: '\$ ${product.price.toStringAsFixed(2)}',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      )
+                    ],
                   ),
                 ),
                 const Spacer(),

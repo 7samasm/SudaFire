@@ -9,6 +9,7 @@ class ProductListLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
+      ignoreContainers: true,
       enabled: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
