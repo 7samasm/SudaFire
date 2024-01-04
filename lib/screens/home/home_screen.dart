@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,7 +31,7 @@ AppBar buildAppBar(BuildContext ctx, int totalItems) {
       IconButton(
         icon: const Icon(Icons.search),
         onPressed: () {
-          // showSearch(context: ctx, delegate: Search);
+          showSearch(context: ctx, delegate: CustomSearchDelegate());
         },
       ),
 
@@ -114,4 +115,67 @@ Widget buildDrawer(BuildContext context) {
       ],
     ),
   );
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    // TODO: implement buildActions
+    return [
+      IconButton(
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear),
+      )
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    // TODO: implement buildLeading
+    // throw UnimplementedError();
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    return ListView(
+      children: [
+        ListTile(
+          title: Text('results'),
+        )
+      ],
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('products').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return const Text('Loading...');
+
+        final results = snapshot.data!.docs.where(
+          (element) =>
+              element['title']
+                  .toString()
+                  .contains(query.trim().toLowerCase()) &&
+              query.isNotEmpty,
+        );
+
+        return ListView(
+          children: results
+              .map<Widget>(
+                (el) => ListTile(
+                  title: Text(el['title']),
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
+    // TODO: implement buildSuggestions
+    // throw UnimplementedError();
+  }
 }
