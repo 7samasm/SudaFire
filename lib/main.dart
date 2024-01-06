@@ -21,7 +21,7 @@ void main() async {
 }
 
 var kcolorScheme = ColorScheme.fromSeed(
-  seedColor: Colors.black,
+  seedColor: Colors.indigo,
   secondary: Colors.pink,
 );
 

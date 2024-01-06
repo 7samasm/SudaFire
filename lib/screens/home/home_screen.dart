@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/cart/cart_screen.dart';
 import 'package:shop_fire/screens/home/widgets/body.dart';
+import 'package:shop_fire/screens/home/widgets/custom_searsh_delegate.dart';
 
 import '../../constans.dart';
 import '../add_product/add_product_screen.dart';
@@ -115,67 +115,4 @@ Widget buildDrawer(BuildContext context) {
       ],
     ),
   );
-}
-
-class CustomSearchDelegate extends SearchDelegate {
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    // TODO: implement buildActions
-    return [
-      IconButton(
-        onPressed: () {
-          query = '';
-        },
-        icon: const Icon(Icons.clear),
-      )
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
-    // throw UnimplementedError();
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return ListView(
-      children: [
-        ListTile(
-          title: Text('results'),
-        )
-      ],
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('products').snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return const Text('Loading...');
-
-        final results = snapshot.data!.docs.where(
-          (element) =>
-              element['title']
-                  .toString()
-                  .contains(query.trim().toLowerCase()) &&
-              query.isNotEmpty,
-        );
-
-        return ListView(
-          children: results
-              .map<Widget>(
-                (el) => ListTile(
-                  title: Text(el['title']),
-                ),
-              )
-              .toList(),
-        );
-      },
-    );
-    // TODO: implement buildSuggestions
-    // throw UnimplementedError();
-  }
 }

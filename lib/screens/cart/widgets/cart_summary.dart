@@ -52,6 +52,9 @@ class CartSummary extends StatelessWidget {
                       final title = cartItems[index].product.title;
                       return ListTile(
                         leading: Badge(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          largeSize: 20,
                           label: Text(
                             cartItems[index].quantity.toStringAsFixed(0),
                           ),
