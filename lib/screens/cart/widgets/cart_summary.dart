@@ -46,36 +46,34 @@ class CartSummary extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: cartItems.length,
-                    itemBuilder: (context, index) {
-                      final title = cartItems[index].product.title;
-                      return ListTile(
-                        leading: Badge(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          largeSize: 20,
-                          label: Text(
-                            cartItems[index].quantity.toStringAsFixed(0),
+                  child: ListWheelScrollView(
+                    itemExtent: 55.0,
+                    diameterRatio: 1.5,
+                    children: [
+                      for (var cartItem in cartItems)
+                        Expanded(
+                          child: ListTile(
+                            leading: Badge(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              largeSize: 20,
+                              label: Text(
+                                cartItem.quantity.toStringAsFixed(0),
+                              ),
+                              child: const FadeInImage(
+                                image: /* NetworkImage(cartItem.product.imageUrl), */
+                                    AssetImage('assets/images/bag_6.png'),
+                                placeholder:
+                                    AssetImage('assets/images/bag_6.png'),
+                              ),
+                            ),
+                            title: Text(cartItem.product.title),
+                            subtitle: Text(
+                              '\$${cartItem.totalUnitsPrice}',
+                            ),
                           ),
-                          child: const FadeInImage(
-                            image: /* NetworkImage(cartItem.product.imageUrl), */
-                                AssetImage('assets/images/bag_6.png'),
-                            placeholder: AssetImage('assets/images/bag_6.png'),
-                          ),
-                        ),
-                        title: Text(title),
-                        subtitle: Text(
-                          '\$${cartItems[index].totalUnitsPrice}',
-                        ),
-                        // trailing: ActionChip(
-                        //   backgroundColor:
-                        //       Theme.of(context).colorScheme.secondary,
-                        //   label: Text(
-                        //       '${cartItems[index].quantity.toStringAsFixed(0)} qty'),
-                        // ),
-                      );
-                    },
+                        )
+                    ],
                   ),
                 ),
                 const Divider(),
@@ -86,15 +84,26 @@ class CartSummary extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    textBaseline: TextBaseline.ideographic,
                     children: [
                       Text.rich(
                         TextSpan(
                           text: 'total\n',
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: Colors.black54),
                           children: [
                             TextSpan(
                               text: totalPrice.toStringAsFixed(2),
-                              style: Theme.of(context).textTheme.titleLarge,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                           ],
                         ),
@@ -105,11 +114,9 @@ class CartSummary extends StatelessWidget {
                           Navigator.of(context).pop();
                         },
                         label: const Text('pay'),
-                        icon: const Icon(Icons.payment_outlined),
-                        style: TextButton.styleFrom(
-                          foregroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                        ),
+                        icon: const Icon(Icons.payment),
+                        style:
+                            TextButton.styleFrom(foregroundColor: Colors.black),
                       ),
                     ],
                   ),

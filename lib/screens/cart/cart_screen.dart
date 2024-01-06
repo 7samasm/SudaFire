@@ -46,12 +46,23 @@ class CartScreen extends ConsumerWidget {
               const Spacer(),
               TextButton.icon(
                 onPressed: () {
-                  showDialog(
+                  showGeneralDialog(
                     context: context,
-                    builder: (context) => CartSummary(
-                      cartItems: cartItems,
-                      totalPrice: _getTotalPrice(cartItems),
-                    ),
+                    transitionDuration: const Duration(milliseconds: 300),
+                    transitionBuilder: (context, a1, a2, child) {
+                      final curevedValue =
+                          Curves.easeInOut.transform(a1.value) - 1.0;
+                      return Transform(
+                        transform:
+                            Matrix4.translationValues(0, curevedValue * 200, 0),
+                        child: CartSummary(
+                          cartItems: cartItems,
+                          totalPrice: _getTotalPrice(cartItems),
+                        ),
+                      );
+                    },
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        const Spacer(),
                   );
                 },
                 label: const Text('order'),

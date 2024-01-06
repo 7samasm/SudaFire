@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop_fire/screens/details/details_screen.dart';
 
 import '../models/cart_item.dart';
 import '../providers/cart_provider.dart';
@@ -15,6 +16,15 @@ class CartTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return DetailsScreen(product: cartItem.product);
+            },
+          ),
+        );
+      },
       leading: const FadeInImage(
         image: /* NetworkImage(cartItem.product.imageUrl), */
             AssetImage('assets/images/bag_6.png'),
