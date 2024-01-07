@@ -7,7 +7,7 @@ import 'package:shop_fire/screens/cart/widgets/cart_summary.dart';
 import 'models/cart_item.dart';
 import 'widgets/cart_tile.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends ConsumerWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   int _getTotalPrice(List<CartItem> cartItem) {
@@ -19,7 +19,8 @@ class CartScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final cartItems = ref.watch(cartProvider);
     print('CartScreen called');
 
     Widget content = Column(
@@ -29,26 +30,20 @@ class CartScreen extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Consumer(
-                builder: (context, ref, child) {
-                  final cartItems = ref.watch(cartProvider);
-                  return Text.rich(
+              Text.rich(
+                TextSpan(
+                  text: 'total\n',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  children: [
                     TextSpan(
-                      text: 'total\n',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      children: [
-                        TextSpan(
-                          text: '\$${_getTotalPrice(cartItems)}',
-                          style:
-                              Theme.of(context).textTheme.titleLarge!.copyWith(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                      ],
+                      text: '\$${_getTotalPrice(cartItems)}',
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: Colors.black54,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
               const Spacer(),
               TextButton.icon(
@@ -77,33 +72,38 @@ class CartScreen extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Consumer(
-            builder: (context, ref, child) {
-              final cartItems = ref.watch(cartProvider);
-              return ListView.builder(
-                itemCount: cartItems.length,
-                itemBuilder: (ctx, i) => Dismissible(
-                  key: ValueKey(cartItems[i].id),
-                  direction: DismissDirection.startToEnd,
-                  onDismissed: (dir) {
-                    ref
-                        .read(cartProvider.notifier)
-                        .deleteCartItem(cartItems[i]);
-                  },
-                  child: CartTile(cartItem: cartItems[i]),
-                ),
-              );
-            },
+          child: ListView.builder(
+            itemCount: cartItems.length,
+            itemBuilder: (ctx, i) => Dismissible(
+              key: ValueKey(cartItems[i].id),
+              direction: DismissDirection.startToEnd,
+              onDismissed: (dir) {
+                ref.read(cartProvider.notifier).deleteCartItem(cartItems[i]);
+              },
+              child: CartTile(cartItem: cartItems[i]),
+            ),
           ),
         ),
       ],
     );
 
-    // if (cartItems.isEmpty) {
-    //   content = const Center(
-    //     child: Text('cart is empty right now!'),
-    //   );
-    // }
+    if (cartItems.isEmpty) {
+      content = AlertDialog(
+        title: const Text('oops'),
+        // actionsPadding: const EdgeInsets.all(10),
+        contentTextStyle: Theme.of(context).textTheme.titleMedium,
+        content: const Text('cart is empty right now!'),
+
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('ok'),
+          ),
+        ],
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
