@@ -22,7 +22,6 @@ class SeeAllButton extends StatelessWidget {
               Icons.arrow_forward_outlined,
               color: Theme.of(context).colorScheme.primary,
             ),
-            // const SizedBox(height: 5),
             Text(
               'see all',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(

@@ -51,26 +51,24 @@ class CartSummary extends StatelessWidget {
                     diameterRatio: 1.5,
                     children: [
                       for (var cartItem in cartItems)
-                        Expanded(
-                          child: ListTile(
-                            leading: Badge(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
-                              largeSize: 20,
-                              label: Text(
-                                cartItem.quantity.toStringAsFixed(0),
-                              ),
-                              child: const FadeInImage(
-                                image: /* NetworkImage(cartItem.product.imageUrl), */
-                                    AssetImage('assets/images/bag_6.png'),
-                                placeholder:
-                                    AssetImage('assets/images/bag_6.png'),
-                              ),
+                        ListTile(
+                          leading: Badge(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            largeSize: 20,
+                            label: Text(
+                              cartItem.quantity.toStringAsFixed(0),
                             ),
-                            title: Text(cartItem.product.title),
-                            subtitle: Text(
-                              '\$${cartItem.totalUnitsPrice}',
+                            child: const FadeInImage(
+                              image: /* NetworkImage(cartItem.product.imageUrl), */
+                                  AssetImage('assets/images/bag_6.png'),
+                              placeholder:
+                                  AssetImage('assets/images/bag_6.png'),
                             ),
+                          ),
+                          title: Text(cartItem.product.title),
+                          subtitle: Text(
+                            '\$${cartItem.totalUnitsPrice}',
                           ),
                         )
                     ],

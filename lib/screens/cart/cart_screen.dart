@@ -7,7 +7,7 @@ import 'package:shop_fire/screens/cart/widgets/cart_summary.dart';
 import 'models/cart_item.dart';
 import 'widgets/cart_tile.dart';
 
-class CartScreen extends ConsumerWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   int _getTotalPrice(List<CartItem> cartItem) {
@@ -19,8 +19,9 @@ class CartScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final cartItems = ref.watch(cartProvider);
+  Widget build(BuildContext context) {
+    print('CartScreen called');
+
     Widget content = Column(
       children: [
         Padding(
@@ -28,20 +29,26 @@ class CartScreen extends ConsumerWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text.rich(
-                TextSpan(
-                  text: 'total\n',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  children: [
+              Consumer(
+                builder: (context, ref, child) {
+                  final cartItems = ref.watch(cartProvider);
+                  return Text.rich(
                     TextSpan(
-                      text: '\$${_getTotalPrice(cartItems)}',
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.black54,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      text: 'total\n',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      children: [
+                        TextSpan(
+                          text: '\$${_getTotalPrice(cartItems)}',
+                          style:
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
               const Spacer(),
               TextButton.icon(
@@ -49,20 +56,15 @@ class CartScreen extends ConsumerWidget {
                   showGeneralDialog(
                     context: context,
                     transitionDuration: const Duration(milliseconds: 300),
-                    transitionBuilder: (context, a1, a2, child) {
-                      final curevedValue =
-                          Curves.easeInOut.transform(a1.value) - 1.0;
-                      return Transform(
-                        transform:
-                            Matrix4.translationValues(0, curevedValue * 200, 0),
-                        child: CartSummary(
+                    pageBuilder: (context, a1, a2) => Consumer(
+                      builder: (context, ref, child) {
+                        final cartItems = ref.watch(cartProvider);
+                        return CartSummary(
                           cartItems: cartItems,
                           totalPrice: _getTotalPrice(cartItems),
-                        ),
-                      );
-                    },
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        const Spacer(),
+                        );
+                      },
+                    ),
                   );
                 },
                 label: const Text('order'),
@@ -75,26 +77,33 @@ class CartScreen extends ConsumerWidget {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: cartItems.length,
-            itemBuilder: (ctx, i) => Dismissible(
-              key: ValueKey(cartItems[i].id),
-              direction: DismissDirection.startToEnd,
-              onDismissed: (dir) {
-                ref.read(cartProvider.notifier).deleteCartItem(cartItems[i]);
-              },
-              child: CartTile(cartItem: cartItems[i]),
-            ),
+          child: Consumer(
+            builder: (context, ref, child) {
+              final cartItems = ref.watch(cartProvider);
+              return ListView.builder(
+                itemCount: cartItems.length,
+                itemBuilder: (ctx, i) => Dismissible(
+                  key: ValueKey(cartItems[i].id),
+                  direction: DismissDirection.startToEnd,
+                  onDismissed: (dir) {
+                    ref
+                        .read(cartProvider.notifier)
+                        .deleteCartItem(cartItems[i]);
+                  },
+                  child: CartTile(cartItem: cartItems[i]),
+                ),
+              );
+            },
           ),
         ),
       ],
     );
 
-    if (cartItems.isEmpty) {
-      content = const Center(
-        child: Text('cart is empty right now!'),
-      );
-    }
+    // if (cartItems.isEmpty) {
+    //   content = const Center(
+    //     child: Text('cart is empty right now!'),
+    //   );
+    // }
 
     return Scaffold(
       appBar: AppBar(

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:shop_fire/constans.dart';
 import 'package:shop_fire/screens/add_product/widgets/pic_picker.dart';
 
@@ -120,7 +121,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       crossAxisAlignment: CrossAxisAlignment.baseline,
                       textBaseline: TextBaseline.ideographic,
                       children: [
-                        Expanded(
+                        Flexible(
+                          flex: 1,
                           child: TextFormField(
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
@@ -131,7 +133,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             },
                           ),
                         ),
-                        const SizedBox(width: kDefaultPaddin * 7),
+                        const Spacer(),
+                        // const SizedBox(width: kDefaultPaddin * 7),
                         DropdownButton(
                           value: _categorey,
                           onChanged: (val) {
@@ -150,13 +153,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: kDefaultPaddin),
+                    const Gap(20),
                     PicPicker(
                       onPickImage: (imageFile) {
                         _selectedImage = imageFile;
                       },
                     ),
-                    const SizedBox(height: kDefaultPaddin),
+                    const Gap(20),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: ElevatedButton.icon(

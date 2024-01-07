@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../../constans.dart';
 import '../../models/product.dart';
@@ -52,7 +53,7 @@ class ProductItem extends StatelessWidget {
                   //   height: 100,
                   // ),
 
-                  const SizedBox(height: kDefaultPaddin / 2),
+                  const Gap(10),
                   Text(
                     _product.title,
                     maxLines: 1,
@@ -60,9 +61,7 @@ class ProductItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                   ),
-                  // SizedBox(height: kDefaultPaddin / 2),
-                  // Text(_product.description),
-                  const SizedBox(height: kDefaultPaddin / 2),
+                  const Gap(10),
                   Text(
                     '\$${_product.price.toStringAsFixed(2)}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(

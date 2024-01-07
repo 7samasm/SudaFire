@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:shop_fire/models/product.dart';
 
 import '../../../constans.dart';
@@ -31,7 +32,7 @@ class Body extends StatelessWidget {
                     placeholder: AssetImage('assets/images/bag_6.png'),
                   ),
                 ),
-                const SizedBox(width: 10),
+                const Gap(10),
                 Expanded(
                   child: Text(
                     product.description,
@@ -69,14 +70,14 @@ class Body extends StatelessWidget {
                       'choose a color',
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
-                    const SizedBox(height: kDefaultPaddin / 2),
+                    const Gap(10),
                     const ColorsGroup(),
                   ],
                 ),
               ],
             ),
           ),
-          const SizedBox(height: kDefaultPaddin * 3),
+          const Gap(60),
           const ProductListHorizonScroll(
             category: 'laptops',
             title: 'see also',

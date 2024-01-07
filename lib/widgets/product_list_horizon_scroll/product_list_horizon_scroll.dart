@@ -80,8 +80,8 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
 
   @override
   void initState() {
-    super.initState();
     _fetchFirebaseData();
+    super.initState();
   }
 
   @override
