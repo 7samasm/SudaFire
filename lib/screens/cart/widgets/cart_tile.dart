@@ -9,12 +9,15 @@ class CartTile extends ConsumerWidget {
   const CartTile({
     super.key,
     required this.cartItem,
+    required this.onCartItemRemoved,
   });
 
   final CartItem cartItem;
+  final Function onCartItemRemoved;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('CartTile called');
     return ListTile(
       onTap: () {
         Navigator.of(context).push(
@@ -52,7 +55,7 @@ class CartTile extends ConsumerWidget {
           IconButton(
             onPressed: () {
               if (cartItem.intQty == 1) {
-                ref.read(cartProvider.notifier).deleteCartItem(cartItem);
+                return;
               }
               ref
                   .read(cartProvider.notifier)
@@ -63,6 +66,7 @@ class CartTile extends ConsumerWidget {
           IconButton(
             onPressed: () {
               ref.read(cartProvider.notifier).deleteCartItem(cartItem);
+              onCartItemRemoved();
             },
             icon: const Icon(
               Icons.delete_outline_rounded,

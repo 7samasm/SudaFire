@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/constans.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
+import 'package:shop_fire/screens/cart/widgets/cart_list_items.dart';
 import 'package:shop_fire/screens/cart/widgets/cart_summary.dart';
 
 import 'models/cart_item.dart';
-import 'widgets/cart_tile.dart';
 
 class CartScreen extends ConsumerWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -71,18 +71,8 @@ class CartScreen extends ConsumerWidget {
             ],
           ),
         ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: cartItems.length,
-            itemBuilder: (ctx, i) => Dismissible(
-              key: ValueKey(cartItems[i].id),
-              direction: DismissDirection.startToEnd,
-              onDismissed: (dir) {
-                ref.read(cartProvider.notifier).deleteCartItem(cartItems[i]);
-              },
-              child: CartTile(cartItem: cartItems[i]),
-            ),
-          ),
+        const Expanded(
+          child: CartListItems(),
         ),
       ],
     );

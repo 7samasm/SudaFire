@@ -25,6 +25,7 @@ class HomeScreen extends StatelessWidget {
 
 AppBar _buildAppBar(BuildContext context) {
   print('_buildAppBar() called');
+
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 0,
