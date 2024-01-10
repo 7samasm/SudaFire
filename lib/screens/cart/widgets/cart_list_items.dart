@@ -46,7 +46,7 @@ class _CartListItemsState extends State<CartListItems> {
           initialItemCount: cartItems.length,
           itemBuilder: (context, i, animation) {
             return Dismissible(
-              key: ValueKey(cartItems[i].id),
+              key: ValueKey(cartItems[i].product.id),
               direction: DismissDirection.startToEnd,
               onDismissed: (dir) {
                 ref.read(cartProvider.notifier).deleteCartItem(cartItems[i]);

@@ -66,8 +66,13 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
     // get last doc if fetched result not empty
     _lastDocument = value.docs.isNotEmpty ? value.docs.last : null;
 
+    // print(_lastDocument!.data());
+
     final List<Product> fetchedProducts = value.docs
-        .map((e) => Product.fromMap(e.data() as Map<String, dynamic>))
+        .map((e) => Product.fromMap(
+              e.data() as Map<String, dynamic>,
+              e.id,
+            ))
         .toList();
 
     setState(

@@ -1,17 +1,18 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'package:shop_fire/models/product.dart';
 
-class CartItem {
-  CartItem({required this.product, this.quantity = 1})
-      : id = DateTime.now().toIso8601String();
-  final String id;
-  final double quantity;
-  final Product product;
+part 'cart_item.freezed.dart';
 
-  double get totalUnitsPrice => product.price * quantity;
+// part 'person.g.dart';
 
-  int get intQty => quantity.toInt();
+@freezed
+class CartItem with _$CartItem {
+  CartItem._();
+  factory CartItem({
+    @Default(1) int quantity,
+    required Product product,
+  }) = _CartItem;
 
-  set quantity(double qty) {
-    quantity = qty;
-  }
+  double get totalUnitsPrice => product.price * quantity.toDouble();
 }

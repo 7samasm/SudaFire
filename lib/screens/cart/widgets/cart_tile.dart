@@ -35,7 +35,7 @@ class CartTile extends ConsumerWidget {
       ),
       title: Text(cartItem.product.title),
       subtitle: Text(
-        '\$${cartItem.product.price * cartItem.quantity} / ${cartItem.intQty} qty',
+        '\$${cartItem.product.price * cartItem.quantity} / ${cartItem.quantity} qty',
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -49,12 +49,12 @@ class CartTile extends ConsumerWidget {
             icon: const Icon(Icons.add),
           ),
           Text(
-            '${cartItem.intQty}',
+            '${cartItem.quantity}',
             style: Theme.of(context).textTheme.titleLarge,
           ),
           IconButton(
             onPressed: () {
-              if (cartItem.intQty == 1) {
+              if (cartItem.quantity == 1) {
                 return;
               }
               ref
