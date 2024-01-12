@@ -5,7 +5,9 @@ import 'package:shop_fire/widgets/product_card_item/product_item.dart';
 import 'package:shop_fire/widgets/product_list_horizon_scroll/product_list_loader.dart';
 
 import '../../constans.dart';
-import '../../models/product.dart';
+import '../../models/product/product.dart';
+
+enum HContext { home, details }
 
 class ProductListHorizonScroll extends StatefulWidget {
   const ProductListHorizonScroll({
@@ -68,12 +70,8 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
 
     // print(_lastDocument!.data());
 
-    final List<Product> fetchedProducts = value.docs
-        .map((e) => Product.fromMap(
-              e.data() as Map<String, dynamic>,
-              e.id,
-            ))
-        .toList();
+    final List<Product> fetchedProducts =
+        value.docs.map((doc) => Product.fromDocument(doc)).toList();
 
     setState(
       () {

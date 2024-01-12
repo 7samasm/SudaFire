@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:shop_fire/models/product.dart';
+import 'package:shop_fire/models/product/product.dart';
 
 import '../../../constans.dart';
 import '../../../widgets/product_list_horizon_scroll/product_list_horizon_scroll.dart';
@@ -11,6 +11,8 @@ class Body extends StatelessWidget {
   final Product product;
   @override
   Widget build(BuildContext context) {
+    // final args = (ModalRoute.of(context)?.settings.arguments ??
+    //     <String, dynamic>{}) as Map;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +85,7 @@ class Body extends StatelessWidget {
             title: 'see also',
           ),
           const ProductListHorizonScroll(
-            category: 'laptops',
+            category: 'phones',
             title: 'related',
           ),
         ],

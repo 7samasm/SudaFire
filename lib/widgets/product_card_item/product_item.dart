@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../constans.dart';
-import '../../models/product.dart';
+import '../../models/product/product.dart';
 import '../../screens/details/details_screen.dart';
 
 class ProductItem extends StatelessWidget {
@@ -13,6 +13,7 @@ class ProductItem extends StatelessWidget {
   final Product _product;
   @override
   Widget build(BuildContext context) {
+    // final heroTag = '${ModalRoute.of(context)!.settings.name}-${_product.id}';
     return SizedBox(
       width: 120,
       child: InkWell(
@@ -20,6 +21,7 @@ class ProductItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
+              settings: const RouteSettings(name: 'details'),
               builder: (ctx) => DetailsScreen(
                 product: _product,
               ),
