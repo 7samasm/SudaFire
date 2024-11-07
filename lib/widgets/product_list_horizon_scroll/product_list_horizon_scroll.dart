@@ -29,7 +29,7 @@ class ProductListHorizonScroll extends StatefulWidget {
 class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
   // ignore: prefer_final_fields
   List<Product> _products = [];
-  static const kPageSize = 5;
+  static const kPageSize = 4;
   bool _isLoading = false;
   DocumentSnapshot? _lastDocument;
   int _totalResults = 0;
@@ -50,35 +50,45 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
         .where('category', isEqualTo: widget.category)
         .orderBy('createdAt');
     // get total count before limit  from query above
-    if (_lastDocument != null) {
+    print("last $_lastDocument");
+    // if (_lastDocument != null) {
+    try {
       var count = (await query.count().get()).count;
 
-      setState(() {
-        _totalResults = count;
-      });
+      if (count != null) {
+        setState(() {
+          _totalResults = count;
+        });
+      }
+    } catch (e) {
+      print(e);
     }
+    // }
 
     // get first result or next page depending on last doc exitence
     query = _lastDocument != null
         ? query.startAfterDocument(_lastDocument!).limit(kPageSize)
         : query.limit(kPageSize);
 
-    final value = await query.get();
+    try {
+      final value = await query.get();
 
-    // get last doc if fetched result not empty
-    _lastDocument = value.docs.isNotEmpty ? value.docs.last : null;
+      // get last doc if fetched result not empty
+      _lastDocument = value.docs.isNotEmpty ? value.docs.last : null;
 
-    // print(_lastDocument!.data());
+      // print(_lastDocument!.data());
 
-    final List<Product> fetchedProducts =
-        value.docs.map((doc) => Product.fromDocument(doc)).toList();
-
-    setState(
-      () {
-        _products.addAll(fetchedProducts);
-        _isLoading = false;
-      },
-    );
+      final List<Product> fetchedProducts =
+          value.docs.map((doc) => Product.fromDocument(doc)).toList();
+      setState(
+        () {
+          _products.addAll(fetchedProducts);
+          _isLoading = false;
+        },
+      );
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -138,7 +148,10 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
                     onNotification: (scrollEnd) {
                       if (scrollEnd.metrics.atEdge &&
                           scrollEnd.metrics.pixels > 0) {
+                        print('lll');
+                        print('$_page || $_totalPages');
                         if (_page < _totalPages) {
+                          print('kkk');
                           _page++;
                           _fetchFirebaseData();
                         }

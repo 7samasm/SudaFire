@@ -28,7 +28,7 @@ class Body extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ProductListHorizonScroll(category: 'laptops', title: 'laptops'),
-                ProductListHorizonScroll(category: 'phones', title: 'phones'),
+                // ProductListHorizonScroll(category: 'phones', title: 'phones'),
               ],
             ),
           ),
