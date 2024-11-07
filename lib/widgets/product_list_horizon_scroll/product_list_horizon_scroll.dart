@@ -53,13 +53,12 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
     print("last $_lastDocument");
     // if (_lastDocument != null) {
     try {
-      var count = (await query.count().get()).count;
+      // var count = (await query.count().get()).count;
+      var count = await query.get();
 
-      if (count != null) {
-        setState(() {
-          _totalResults = count;
-        });
-      }
+      setState(() {
+        _totalResults = count.size;
+      });
     } catch (e) {
       print(e);
     }
