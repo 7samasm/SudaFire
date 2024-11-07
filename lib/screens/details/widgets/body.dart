@@ -7,7 +7,7 @@ import '../../../widgets/product_list_horizon_scroll/product_list_horizon_scroll
 import 'colors_radio_group.dart';
 
 class Body extends StatelessWidget {
-  const Body(this.product, {Key? key}) : super(key: key);
+  const Body(this.product, {super.key});
   final Product product;
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,13 @@ class Body extends StatelessWidget {
               children: [
                 Hero(
                   tag: product.id,
-                  child: const FadeInImage(
+                  child: FadeInImage(
                     width: 200,
-                    image: /*NetworkImage(product.imageUrl),*/
-                        AssetImage('assets/images/bag_6.png'),
-                    placeholder: AssetImage('assets/images/bag_6.png'),
+                    image: NetworkImage(product.imageUrl),
+                    // AssetImage('assets/images/bag_6.png'),
+                    placeholder: const AssetImage('assets/images/bag_6.png'),
+                    imageErrorBuilder: (context, error, stackTrace) =>
+                        Image.asset('assets/images/bag_6.png'),
                   ),
                 ),
                 const Gap(10),

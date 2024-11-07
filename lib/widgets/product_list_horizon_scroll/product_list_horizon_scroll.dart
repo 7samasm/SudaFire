@@ -29,7 +29,7 @@ class ProductListHorizonScroll extends StatefulWidget {
 class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
   // ignore: prefer_final_fields
   List<Product> _products = [];
-  static const kPageSize = 4;
+  static const kPageSize = 6;
   bool _isLoading = false;
   DocumentSnapshot? _lastDocument;
   int _totalResults = 0;
