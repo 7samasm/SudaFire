@@ -10,8 +10,8 @@ import '../cart/cart_screen.dart';
 class DetailsScreen extends ConsumerWidget {
   const DetailsScreen({
     required this.product,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final Product product;
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -13,6 +13,7 @@ class ProductListHorizonScroll extends StatefulWidget {
   const ProductListHorizonScroll({
     required this.category,
     required this.title,
+    this.pageTitle = '',
     super.key,
   });
 
@@ -20,6 +21,7 @@ class ProductListHorizonScroll extends StatefulWidget {
 
   final String category;
   final String title;
+  final String pageTitle;
 
   @override
   State<ProductListHorizonScroll> createState() =>
@@ -40,15 +42,22 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
     if (_isLoading) {
       return;
     }
-
-    setState(() {
-      _isLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
     //query
     Query query = FirebaseFirestore.instance
         .collection("products")
         .where('category', isEqualTo: widget.category)
         .orderBy('createdAt');
+    if (widget.title == 'related' || widget.title == 'see also') {
+      query = FirebaseFirestore.instance
+          .collection("products")
+          .where('category', isEqualTo: widget.category)
+          .where('title', isNotEqualTo: widget.pageTitle);
+    }
     // get total count before limit  from query above
     print("last $_lastDocument");
     // if (_lastDocument != null) {
@@ -56,9 +65,11 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
       // var count = (await query.count().get()).count;
       var count = await query.get();
 
-      setState(() {
-        _totalResults = count.size;
-      });
+      if (mounted) {
+        setState(() {
+          _totalResults = count.size;
+        });
+      }
     } catch (e) {
       print(e);
     }
@@ -79,12 +90,14 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
 
       final List<Product> fetchedProducts =
           value.docs.map((doc) => Product.fromDocument(doc)).toList();
-      setState(
-        () {
-          _products.addAll(fetchedProducts);
-          _isLoading = false;
-        },
-      );
+      if (mounted) {
+        setState(
+          () {
+            _products.addAll(fetchedProducts);
+            _isLoading = false;
+          },
+        );
+      }
     } on Exception catch (e) {
       print(e);
     }
@@ -95,6 +108,13 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
     _fetchFirebaseData();
     super.initState();
   }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

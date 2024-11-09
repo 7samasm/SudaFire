@@ -82,13 +82,15 @@ class Body extends StatelessWidget {
             ),
           ),
           const Gap(60),
-          const ProductListHorizonScroll(
+          ProductListHorizonScroll(
             category: 'laptops',
             title: 'see also',
+            pageTitle: product.title,
           ),
-          const ProductListHorizonScroll(
+          ProductListHorizonScroll(
             category: 'phones',
             title: 'related',
+            pageTitle: product.title,
           ),
         ],
       ),

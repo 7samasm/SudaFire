@@ -11,7 +11,7 @@ import 'package:shop_fire/screens/add_product/widgets/pic_picker.dart';
 final fireAuth = FirebaseAuth.instance;
 
 class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({Key? key}) : super(key: key);
+  const AddProductScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api

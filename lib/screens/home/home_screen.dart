@@ -9,7 +9,7 @@ import 'package:shop_fire/screens/home/widgets/custom_searsh_delegate.dart';
 import '../add_product/add_product_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ final fireAuth = FirebaseAuth.instance;
 final user = fireAuth.currentUser;
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

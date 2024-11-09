@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_fire/constans.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api

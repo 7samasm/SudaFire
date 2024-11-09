@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PicPicker extends StatefulWidget {
-  const PicPicker({Key? key, required this.onPickImage}) : super(key: key);
+  const PicPicker({super.key, required this.onPickImage});
 
   final void Function(File imageFile) onPickImage;
 

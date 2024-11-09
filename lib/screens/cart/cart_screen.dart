@@ -8,7 +8,7 @@ import 'package:shop_fire/screens/cart/widgets/cart_summary.dart';
 import 'models/cart_item.dart';
 
 class CartScreen extends ConsumerWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  const CartScreen({super.key});
 
   int _getTotalPrice(List<CartItem> cartItem) {
     double sum = 0;
