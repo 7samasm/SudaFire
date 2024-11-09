@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('HomeScreen called');
+    // print('HomeScreen called');
 
     return Scaffold(
       appBar: _buildAppBar(context),
@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 AppBar _buildAppBar(BuildContext context) {
-  print('_buildAppBar() called');
+  // print('_buildAppBar() called');
 
   return AppBar(
     backgroundColor: Colors.white,
@@ -69,7 +69,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('CustomDrawer called');
+    // print('CustomDrawer called');
     // print(Router(routerDelegate: routerDelegate));
     return Drawer(
       child: ListView(

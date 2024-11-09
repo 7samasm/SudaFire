@@ -17,7 +17,7 @@ class CartTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('CartTile called');
+    // print('CartTile called');
     return ListTile(
       onTap: () {
         Navigator.of(context).push(

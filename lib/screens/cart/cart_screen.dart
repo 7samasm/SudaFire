@@ -21,7 +21,7 @@ class CartScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final cartItems = ref.watch(cartProvider);
-    print('CartScreen called');
+    // print('CartScreen called');
 
     Widget content = Column(
       children: [

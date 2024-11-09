@@ -47,40 +47,30 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
         _isLoading = true;
       });
     }
-    //query
-    Query query = FirebaseFirestore.instance
-        .collection("products")
-        .where('category', isEqualTo: widget.category)
-        .orderBy('createdAt');
-    if (widget.title == 'related' || widget.title == 'see also') {
-      query = FirebaseFirestore.instance
+
+    try {
+      //query
+      Query query = FirebaseFirestore.instance
           .collection("products")
           .where('category', isEqualTo: widget.category)
-          .where('title', isNotEqualTo: widget.pageTitle);
-    }
-    // get total count before limit  from query above
-    print("last $_lastDocument");
-    // if (_lastDocument != null) {
-    try {
-      // var count = (await query.count().get()).count;
+          .orderBy('createdAt');
+      if (widget.title == 'related' || widget.title == 'see also') {
+        query = FirebaseFirestore.instance
+            .collection("products")
+            .where('category', isEqualTo: widget.category)
+            .where('title', isNotEqualTo: widget.pageTitle);
+      }
+      // get total count before limit  from query above
       var count = await query.get();
-
       if (mounted) {
         setState(() {
           _totalResults = count.size;
         });
       }
-    } catch (e) {
-      print(e);
-    }
-    // }
-
-    // get first result or next page depending on last doc exitence
-    query = _lastDocument != null
-        ? query.startAfterDocument(_lastDocument!).limit(kPageSize)
-        : query.limit(kPageSize);
-
-    try {
+      // get first result or next page depending on last doc exitence
+      query = _lastDocument != null
+          ? query.startAfterDocument(_lastDocument!).limit(kPageSize)
+          : query.limit(kPageSize);
       final value = await query.get();
 
       // get last doc if fetched result not empty
@@ -98,8 +88,9 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
           },
         );
       }
+      // ignore: unused_catch_clause
     } on Exception catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -108,13 +99,6 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
     _fetchFirebaseData();
     super.initState();
   }
-
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -167,10 +151,8 @@ class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
                     onNotification: (scrollEnd) {
                       if (scrollEnd.metrics.atEdge &&
                           scrollEnd.metrics.pixels > 0) {
-                        print('lll');
-                        print('$_page || $_totalPages');
+                        // print('$_page || $_totalPages');
                         if (_page < _totalPages) {
-                          print('kkk');
                           _page++;
                           _fetchFirebaseData();
                         }
