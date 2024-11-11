@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shop_fire/screens/auth/auth_screen.dart';
+import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/home/home_screen.dart';
 import 'firebase_options.dart';
 
@@ -57,7 +58,12 @@ class MyApp extends StatelessWidget {
             );
           }
           if (snapshot.hasData) {
-            return const HomeScreen();
+            return Consumer(
+              builder: (context, ref, child) {
+                ref.read(cartProvider.notifier).loadCartItems();
+                return const HomeScreen();
+              },
+            );
           }
           return const AuthScreen();
         },

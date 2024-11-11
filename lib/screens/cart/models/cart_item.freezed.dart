@@ -14,11 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+CartItem _$CartItemFromJson(Map<String, dynamic> json) {
+  return _CartItem.fromJson(json);
+}
+
 /// @nodoc
 mixin _$CartItem {
   int get quantity => throw _privateConstructorUsedError;
   Product get product => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $CartItemCopyWith<CartItem> get copyWith =>
       throw _privateConstructorUsedError;
@@ -113,9 +118,12 @@ class __$$CartItemImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$CartItemImpl extends _CartItem {
   _$CartItemImpl({this.quantity = 1, required this.product}) : super._();
+
+  factory _$CartItemImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CartItemImplFromJson(json);
 
   @override
   @JsonKey()
@@ -138,6 +146,7 @@ class _$CartItemImpl extends _CartItem {
             (identical(other.product, product) || other.product == product));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, quantity, product);
 
@@ -146,12 +155,22 @@ class _$CartItemImpl extends _CartItem {
   @pragma('vm:prefer-inline')
   _$$CartItemImplCopyWith<_$CartItemImpl> get copyWith =>
       __$$CartItemImplCopyWithImpl<_$CartItemImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CartItemImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _CartItem extends CartItem {
   factory _CartItem({final int quantity, required final Product product}) =
       _$CartItemImpl;
   _CartItem._() : super._();
+
+  factory _CartItem.fromJson(Map<String, dynamic> json) =
+      _$CartItemImpl.fromJson;
 
   @override
   int get quantity;

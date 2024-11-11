@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:shop_fire/models/product/product.dart';
 
 import '../../../constans.dart';
-import '../../../widgets/product_list_horizon_scroll/product_list_horizon_scroll.dart';
+import '../../../widgets/product_list_horizon_scroll/product_list_horizontal_scroll.dart';
 import 'colors_radio_group.dart';
 
 class Body extends StatelessWidget {
@@ -82,12 +82,12 @@ class Body extends StatelessWidget {
             ),
           ),
           const Gap(60),
-          ProductListHorizonScroll(
+          ProductListHorizontalScroll(
             category: 'laptops',
             title: 'see also',
             pageTitle: product.title,
           ),
-          ProductListHorizonScroll(
+          ProductListHorizontalScroll(
             category: 'phones',
             title: 'related',
             pageTitle: product.title,

@@ -61,12 +61,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
           'createdAt': Timestamp.now(),
         },
       );
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('added succsefuly'),
-        ),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('added succsefuly'),
+          ),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

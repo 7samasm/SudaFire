@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/product_list_horizon_scroll/product_list_horizon_scroll.dart';
+import '../../../widgets/product_list_horizon_scroll/product_list_horizontal_scroll.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -27,8 +27,10 @@ class Body extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProductListHorizonScroll(category: 'laptops', title: 'laptops'),
-                ProductListHorizonScroll(category: 'phones', title: 'phones'),
+                ProductListHorizontalScroll(
+                    category: 'laptops', title: 'laptops'),
+                ProductListHorizontalScroll(
+                    category: 'phones', title: 'phones'),
               ],
             ),
           ),

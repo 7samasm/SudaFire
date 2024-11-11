@@ -7,10 +7,8 @@ import 'package:shop_fire/widgets/product_list_horizon_scroll/product_list_loade
 import '../../constans.dart';
 import '../../models/product/product.dart';
 
-enum HContext { home, details }
-
-class ProductListHorizonScroll extends StatefulWidget {
-  const ProductListHorizonScroll({
+class ProductListHorizontalScroll extends StatefulWidget {
+  const ProductListHorizontalScroll({
     required this.category,
     required this.title,
     this.pageTitle = '',
@@ -24,11 +22,12 @@ class ProductListHorizonScroll extends StatefulWidget {
   final String pageTitle;
 
   @override
-  State<ProductListHorizonScroll> createState() =>
-      _ProductListHorizonScrollState();
+  State<ProductListHorizontalScroll> createState() =>
+      _ProductListHorizontalScrollState();
 }
 
-class _ProductListHorizonScrollState extends State<ProductListHorizonScroll> {
+class _ProductListHorizontalScrollState
+    extends State<ProductListHorizontalScroll> {
   // ignore: prefer_final_fields
   List<Product> _products = [];
   static const kPageSize = 6;
