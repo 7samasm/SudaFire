@@ -12,7 +12,7 @@ class ColorsGroup extends StatefulWidget {
 
 class _ColorsGroupState extends State<ColorsGroup> with RestorationMixin {
   final RestorableInt radioValue = RestorableInt(0);
-  List<Color> colors = [Colors.pink, Colors.blue, Colors.brown];
+  List<Color> colors = [Colors.pink, Colors.indigo, Colors.grey];
   _changeRadio(int value) {
     setState(() {
       radioValue.value = value;
