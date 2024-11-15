@@ -30,6 +30,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
   bool _isSaving = false;
 
   void _submit() async {
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
     _form.currentState!.save();
     _form.currentState!.reset();
 
@@ -104,6 +108,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       label: Text('title'),
                       border: OutlineInputBorder(),
                     ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'title must not be empty';
+                      }
+                      return null;
+                    },
                     onSaved: (v) {
                       _enteredTitle = v!;
                     },
@@ -115,6 +125,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       label: Text('description'),
                       border: OutlineInputBorder(),
                     ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'description must not be empty';
+                      }
+                      return null;
+                    },
                     onSaved: (v) {
                       _enterdDescription = v!;
                     },
@@ -132,6 +148,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             label: Text('price'),
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'price must not be empty';
+                            }
+                            return null;
+                          },
                           onSaved: (v) {
                             _enterdPrice = v!;
                           },
