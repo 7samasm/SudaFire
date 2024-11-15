@@ -92,51 +92,55 @@ class _AddProductScreenState extends State<AddProductScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(kDefaultPaddin),
-          child: Card(
-            elevation: 6,
-            child: Padding(
-              padding: const EdgeInsets.all(kDefaultPaddin - 7),
-              child: Form(
-                key: _form,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        label: Text('title'),
-                      ),
-                      onSaved: (v) {
-                        _enteredTitle = v!;
-                      },
+          child: Padding(
+            padding: const EdgeInsets.all(kDefaultPaddin - 7),
+            child: Form(
+              key: _form,
+              child: Column(
+                children: [
+                  TextFormField(
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      label: Text('title'),
+                      border: OutlineInputBorder(),
                     ),
-                    TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        label: Text('description'),
-                      ),
-                      onSaved: (v) {
-                        _enterdDescription = v!;
-                      },
+                    onSaved: (v) {
+                      _enteredTitle = v!;
+                    },
+                  ),
+                  const Gap(kDefaultPaddin),
+                  TextFormField(
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      label: Text('description'),
+                      border: OutlineInputBorder(),
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.ideographic,
-                      children: [
-                        Flexible(
-                          flex: 1,
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              label: Text('price'),
-                            ),
-                            onSaved: (v) {
-                              _enterdPrice = v!;
-                            },
+                    onSaved: (v) {
+                      _enterdDescription = v!;
+                    },
+                  ),
+                  const Gap(kDefaultPaddin),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.ideographic,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            label: Text('price'),
+                            border: OutlineInputBorder(),
                           ),
+                          onSaved: (v) {
+                            _enterdPrice = v!;
+                          },
                         ),
-                        const Spacer(),
-                        // const SizedBox(width: kDefaultPaddin * 7),
-                        DropdownButton(
+                      ),
+                      const Spacer(),
+                      // const SizedBox(width: kDefaultPaddin * 7),
+                      Expanded(
+                        child: DropdownButtonFormField(
                           value: _categorey,
                           onChanged: (val) {
                             setState(() {
@@ -151,26 +155,29 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 ),
                               )
                               .toList(),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
                         ),
-                      ],
-                    ),
-                    const Gap(20),
-                    PicPicker(
-                      onPickImage: (imageFile) {
-                        _selectedImage = imageFile;
-                      },
-                    ),
-                    const Gap(20),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: ElevatedButton.icon(
-                        onPressed: _isSaving ? null : _submit,
-                        icon: const Icon(Icons.save),
-                        label: const Text('save'),
                       ),
-                    )
-                  ],
-                ),
+                    ],
+                  ),
+                  const Gap(kDefaultPaddin),
+                  PicPicker(
+                    onPickImage: (imageFile) {
+                      _selectedImage = imageFile;
+                    },
+                  ),
+                  const Gap(kDefaultPaddin),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton.icon(
+                      onPressed: _isSaving ? null : _submit,
+                      icon: const Icon(Icons.save_outlined),
+                      label: const Text('save'),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

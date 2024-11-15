@@ -33,16 +33,16 @@ class _PicPickerState extends State<PicPicker> {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        TextButton.icon(
+          onPressed: _pickImage,
+          icon: const Icon(Icons.image_outlined),
+          label: const Text('add photo'),
+        ),
+        const Spacer(),
         CircleAvatar(
           backgroundColor: Colors.grey,
           foregroundImage:
               _pickedImageFile != null ? FileImage(_pickedImageFile!) : null,
-        ),
-        const Spacer(),
-        TextButton.icon(
-          onPressed: _pickImage,
-          icon: const Icon(Icons.image),
-          label: const Text('add photo'),
         ),
       ],
     );
