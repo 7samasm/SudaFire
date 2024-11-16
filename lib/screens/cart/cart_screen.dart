@@ -26,7 +26,7 @@ class CartScreen extends ConsumerWidget {
     Widget content = Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

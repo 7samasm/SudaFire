@@ -1,3 +1,3 @@
-const double kDefaultPaddin = 20;
+const double kDefaultPadding = 20;
 
 const kDefaultHomeLimitPage = 7;

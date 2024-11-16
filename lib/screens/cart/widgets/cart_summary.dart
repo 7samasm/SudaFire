@@ -18,7 +18,7 @@ class CartSummary extends StatelessWidget {
     return Center(
       child: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
           width: double.maxFinite,
           height: 400,
           child: Card(
@@ -77,8 +77,8 @@ class CartSummary extends StatelessWidget {
                 const Divider(),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: kDefaultPaddin,
-                    vertical: kDefaultPaddin / 3.5,
+                    horizontal: kDefaultPadding,
+                    vertical: kDefaultPadding / 3.5,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

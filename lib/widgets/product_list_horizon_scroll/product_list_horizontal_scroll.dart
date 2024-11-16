@@ -103,7 +103,7 @@ class _ProductListHorizontalScrollState
   Widget build(BuildContext context) {
     // print([..._products, 'zzz']);
     return Padding(
-      padding: const EdgeInsets.only(left: kDefaultPaddin),
+      padding: const EdgeInsets.only(left: kDefaultPadding),
       child: _products.isNotEmpty
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,

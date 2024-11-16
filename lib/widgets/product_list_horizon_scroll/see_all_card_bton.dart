@@ -11,8 +11,8 @@ class SeeAllButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        right: kDefaultPaddin,
-        left: kDefaultPaddin / 4,
+        right: kDefaultPadding,
+        left: kDefaultPadding / 4,
       ),
       child: Center(
         child: Column(

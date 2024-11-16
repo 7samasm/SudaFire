@@ -19,8 +19,8 @@ class Body extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(
-              left: kDefaultPaddin,
-              right: kDefaultPaddin * 2,
+              left: kDefaultPadding,
+              right: kDefaultPadding * 2,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +50,7 @@ class Body extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+            padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

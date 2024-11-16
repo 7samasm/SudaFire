@@ -17,7 +17,7 @@ class _CategoriesListState extends State<CategoriesList> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
+      padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
       child: SizedBox(
         height: 25,
         child: ListView.builder(
@@ -37,12 +37,12 @@ class _CategoriesListState extends State<CategoriesList> {
         });
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         child: Column(
           children: [
             Text(Categories.values[index].name),
             Container(
-              margin: const EdgeInsets.only(top: kDefaultPaddin / 4),
+              margin: const EdgeInsets.only(top: kDefaultPadding / 4),
               height: 2,
               width: 30,
               color:

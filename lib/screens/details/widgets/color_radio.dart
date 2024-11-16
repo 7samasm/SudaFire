@@ -18,7 +18,7 @@ class ColorRadio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin / 12),
+      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 12),
       child: GestureDetector(
         onTap: onTap,
         child: Container(

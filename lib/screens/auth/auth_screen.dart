@@ -71,7 +71,7 @@ class _AuthScreenState extends State<AuthScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(kDefaultPaddin),
+            padding: const EdgeInsets.all(kDefaultPadding),
             child: Column(
               children: [
                 Icon(
@@ -80,7 +80,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(kDefaultPaddin),
+                  padding: const EdgeInsets.all(kDefaultPadding),
                   child: Form(
                     key: _form,
                     child: Column(
@@ -93,7 +93,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             labelText: 'email',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(kDefaultPaddin * 2),
+                                Radius.circular(kDefaultPadding * 2),
                               ),
                             ),
                           ),
@@ -110,7 +110,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           },
                         ),
                         if (!_isLogin) ...[
-                          const SizedBox(height: kDefaultPaddin - 5),
+                          const SizedBox(height: kDefaultPadding - 5),
                           TextFormField(
                             key: UniqueKey(),
                             keyboardType: TextInputType.emailAddress,
@@ -118,7 +118,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               labelText: 'username',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(kDefaultPaddin * 2),
+                                  Radius.circular(kDefaultPadding * 2),
                                 ),
                               ),
                             ),
@@ -133,14 +133,14 @@ class _AuthScreenState extends State<AuthScreen> {
                             },
                           ),
                         ],
-                        const SizedBox(height: kDefaultPaddin - 5),
+                        const SizedBox(height: kDefaultPadding - 5),
                         TextFormField(
                           key: UniqueKey(),
                           decoration: const InputDecoration(
                             labelText: 'password',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(kDefaultPaddin * 2),
+                                Radius.circular(kDefaultPadding * 2),
                               ),
                             ),
                           ),
@@ -155,7 +155,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: kDefaultPaddin - 5),
+                        const SizedBox(height: kDefaultPadding - 5),
                         OutlinedButton.icon(
                           style: OutlinedButton.styleFrom(
                             disabledBackgroundColor: Colors.grey,
@@ -164,13 +164,13 @@ class _AuthScreenState extends State<AuthScreen> {
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,
                             fixedSize: const Size(
-                                double.maxFinite, kDefaultPaddin * 2.8),
+                                double.maxFinite, kDefaultPadding * 2.8),
                           ),
                           onPressed: _isAuthenticating ? null : _submit,
                           icon: const Icon(Icons.login),
                           label: Text(_isLogin ? 'login' : 'signup'),
                         ),
-                        const SizedBox(height: kDefaultPaddin - 5),
+                        const SizedBox(height: kDefaultPadding - 5),
                         TextButton(
                           onPressed: () {
                             setState(() {

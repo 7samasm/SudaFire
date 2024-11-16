@@ -29,11 +29,11 @@ class ProductItem extends StatelessWidget {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(kDefaultPaddin / 4),
+          padding: const EdgeInsets.all(kDefaultPadding / 4),
           child: DecoratedBox(
             decoration: const BoxDecoration(),
             child: Padding(
-              padding: const EdgeInsets.all(kDefaultPaddin / 3),
+              padding: const EdgeInsets.all(kDefaultPadding / 3),
               child: Column(
                 children: [
                   Hero(

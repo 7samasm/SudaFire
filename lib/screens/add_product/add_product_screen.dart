@@ -95,9 +95,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(kDefaultPaddin),
+          padding: const EdgeInsets.all(kDefaultPadding),
           child: Padding(
-            padding: const EdgeInsets.all(kDefaultPaddin - 7),
+            padding: const EdgeInsets.all(kDefaultPadding - 7),
             child: Form(
               key: _form,
               child: Column(
@@ -118,7 +118,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       _enteredTitle = v!;
                     },
                   ),
-                  const Gap(kDefaultPaddin),
+                  const Gap(kDefaultPadding),
                   TextFormField(
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
@@ -135,7 +135,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       _enterdDescription = v!;
                     },
                   ),
-                  const Gap(kDefaultPaddin),
+                  const Gap(kDefaultPadding),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.ideographic,
@@ -184,13 +184,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                     ],
                   ),
-                  const Gap(kDefaultPaddin),
+                  const Gap(kDefaultPadding),
                   PicPicker(
                     onPickImage: (imageFile) {
                       _selectedImage = imageFile;
                     },
                   ),
-                  const Gap(kDefaultPaddin),
+                  const Gap(kDefaultPadding),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: TextButton.icon(
