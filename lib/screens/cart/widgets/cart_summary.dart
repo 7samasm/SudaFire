@@ -112,7 +112,16 @@ class CartSummary extends StatelessWidget {
                           Navigator.of(context).pop();
                         },
                         label: const Text('pay'),
-                        icon: const Icon(Icons.payment),
+                        icon: const Icon(Icons.payment_outlined),
+                        style:
+                            TextButton.styleFrom(foregroundColor: Colors.black),
+                      ),
+                      TextButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        label: const Text('cancel'),
+                        icon: const Icon(Icons.clear_outlined),
                         style:
                             TextButton.styleFrom(foregroundColor: Colors.black),
                       ),

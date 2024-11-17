@@ -35,8 +35,8 @@ class _PicPickerState extends State<PicPicker> {
       children: [
         TextButton.icon(
           onPressed: _pickImage,
-          icon: const Icon(Icons.image_outlined),
-          label: const Text('add photo'),
+          icon: const Icon(Icons.add_a_photo_outlined),
+          label: const Text('add a photo'),
         ),
         const Spacer(),
         CircleAvatar(
