@@ -59,11 +59,13 @@ class CartSummary extends StatelessWidget {
                             label: Text(
                               cartItem.quantity.toStringAsFixed(0),
                             ),
-                            child: const FadeInImage(
-                              image: /* NetworkImage(cartItem.product.imageUrl), */
-                                  AssetImage('assets/images/bag_6.png'),
+                            child: FadeInImage(
+                              image: NetworkImage(cartItem.product.imageUrl),
+                              // AssetImage('assets/images/bag_6.png'),
+                              imageErrorBuilder: (context, error, stackTrace) =>
+                                  Image.asset('assets/images/bag_6.png'),
                               placeholder:
-                                  AssetImage('assets/images/bag_6.png'),
+                                  const AssetImage('assets/images/bag_6.png'),
                             ),
                           ),
                           title: Text(cartItem.product.title),

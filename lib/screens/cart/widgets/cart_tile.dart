@@ -28,10 +28,12 @@ class CartTile extends ConsumerWidget {
           ),
         );
       },
-      leading: const FadeInImage(
-        image: /* NetworkImage(cartItem.product.imageUrl), */
-            AssetImage('assets/images/bag_6.png'),
-        placeholder: AssetImage('assets/images/bag_6.png'),
+      leading: FadeInImage(
+        image: NetworkImage(cartItem.product.imageUrl),
+        // AssetImage('assets/images/bag_6.png'),
+        placeholder: const AssetImage('assets/images/bag_6.png'),
+        imageErrorBuilder: (context, error, stackTrace) =>
+            Image.asset('assets/images/bag_6.png'),
       ),
       title: Text(cartItem.product.title),
       subtitle: Text(

@@ -56,8 +56,8 @@ class _ProductListHorizontalScrollState
       if (widget.title == 'related' || widget.title == 'see also') {
         query = FirebaseFirestore.instance
             .collection("products")
-            .where('category', isEqualTo: widget.category)
-            .where('title', isNotEqualTo: widget.pageTitle);
+            .where('title', isNotEqualTo: widget.pageTitle)
+            .where('category', isEqualTo: widget.category);
       }
       // get total count before limit  from query above
       var count = await query.get();

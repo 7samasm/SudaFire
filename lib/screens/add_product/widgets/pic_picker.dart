@@ -18,7 +18,7 @@ class _PicPickerState extends State<PicPicker> {
 
   void _pickImage() async {
     final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedImage == null) {
       return;
     }
