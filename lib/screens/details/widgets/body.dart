@@ -14,83 +14,108 @@ class Body extends StatelessWidget {
     // final args = (ModalRoute.of(context)?.settings.arguments ??
     //     <String, dynamic>{}) as Map;
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: kDefaultPadding,
-              right: kDefaultPadding * 2,
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
+              ),
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            margin: EdgeInsets.only(
+                top: (MediaQuery.of(context).size.height) * 0.3),
+            child: Column(
               children: [
-                Hero(
-                  tag: product.id,
-                  child: FadeInImage(
-                    width: 200,
-                    image: NetworkImage(product.imageUrl),
-                    // AssetImage('assets/images/bag_6.png'),
-                    placeholder: const AssetImage('assets/images/bag_6.png'),
-                    imageErrorBuilder: (context, error, stackTrace) =>
-                        Image.asset('assets/images/bag_6.png'),
-                  ),
-                ),
-                const Gap(10),
-                Expanded(
-                  child: Text(
-                    product.description,
-                    textAlign: TextAlign.justify,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: const Color.fromARGB(137, 26, 25, 25),
-                        ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text.rich(
-                  TextSpan(
-                    text: 'price\n',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                const Gap(kDefaultPadding * 2),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      TextSpan(
-                        text: '\$ ${product.price.toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      )
+                      Text.rich(
+                        TextSpan(
+                          text: 'price\n',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          children: [
+                            TextSpan(
+                              text: '\$ ${product.price.toStringAsFixed(2)}',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            )
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'choose a color',
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          const Gap(10),
+                          const ColorsGroup(),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-                const Spacer(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'choose a color',
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ),
-                    const Gap(10),
-                    const ColorsGroup(),
-                  ],
+                const Gap(kDefaultPadding),
+                ProductListHorizontalScroll(
+                  category: 'laptops',
+                  title: 'see also',
+                  pageTitle: product.title,
+                ),
+                ProductListHorizontalScroll(
+                  category: 'phones',
+                  title: 'related',
+                  pageTitle: product.title,
                 ),
               ],
             ),
           ),
-          const Gap(60),
-          ProductListHorizontalScroll(
-            category: 'laptops',
-            title: 'see also',
-            pageTitle: product.title,
-          ),
-          ProductListHorizontalScroll(
-            category: 'phones',
-            title: 'related',
-            pageTitle: product.title,
+          Column(
+            children: [
+              const Gap(kDefaultPadding),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: kDefaultPadding,
+                  right: kDefaultPadding * 2,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Hero(
+                      tag: product.id,
+                      child: FadeInImage(
+                        width: 220,
+                        image: NetworkImage(product.imageUrl),
+                        // AssetImage('assets/images/bag_6.png'),
+                        placeholder:
+                            const AssetImage('assets/images/bag_6.png'),
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          'assets/images/bag_6.png',
+                          // width: 220,
+                        ),
+                      ),
+                    ),
+                    const Gap(10),
+                    Expanded(
+                      child: Text(
+                        product.description,
+                        textAlign: TextAlign.justify,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

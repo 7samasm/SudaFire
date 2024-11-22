@@ -17,6 +17,7 @@ class DetailsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final totalItems = ref.watch(cartProvider).length;
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         title: Text(product.title),
         actions: [

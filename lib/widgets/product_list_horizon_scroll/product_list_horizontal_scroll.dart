@@ -52,7 +52,7 @@ class _ProductListHorizontalScrollState
       Query query = FirebaseFirestore.instance
           .collection("products")
           .where('category', isEqualTo: widget.category)
-          .orderBy('createdAt');
+          .orderBy('createdAt', descending: true);
       if (widget.title == 'related' || widget.title == 'see also') {
         query = FirebaseFirestore.instance
             .collection("products")
