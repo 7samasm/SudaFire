@@ -94,12 +94,9 @@ class Body extends StatelessWidget {
                         image: NetworkImage(product.imageUrl),
                         // AssetImage('assets/images/bag_6.png'),
                         placeholder:
-                            const AssetImage('assets/images/bag_6.png'),
+                            const AssetImage(kPlaceholderAndErrorAssetImage),
                         imageErrorBuilder: (context, error, stackTrace) =>
-                            Image.asset(
-                          'assets/images/bag_6.png',
-                          // width: 220,
-                        ),
+                            Image.asset(kPlaceholderAndErrorAssetImage),
                       ),
                     ),
                     const Gap(10),

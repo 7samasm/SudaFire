@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/screens/details/details_screen.dart';
 
+import '../../../constans.dart';
 import '../models/cart_item.dart';
 import '../providers/cart_provider.dart';
 
@@ -31,9 +32,9 @@ class CartTile extends ConsumerWidget {
       leading: FadeInImage(
         image: NetworkImage(cartItem.product.imageUrl),
         // AssetImage('assets/images/bag_6.png'),
-        placeholder: const AssetImage('assets/images/bag_6.png'),
+        placeholder: const AssetImage(kPlaceholderAndErrorAssetImage),
         imageErrorBuilder: (context, error, stackTrace) =>
-            Image.asset('assets/images/bag_6.png'),
+            Image.asset(kPlaceholderAndErrorAssetImage),
       ),
       title: Text(cartItem.product.title),
       subtitle: Text(

@@ -64,9 +64,10 @@ class ProductItem extends StatelessWidget {
                       height: 100,
                       image: NetworkImage(_product.imageUrl),
                       // AssetImage('assets/images/bag_6.png'),
-                      placeholder: const AssetImage('assets/images/bag_1.png'),
+                      placeholder:
+                          const AssetImage(kPlaceholderAndErrorAssetImage),
                       imageErrorBuilder: (context, error, stackTrace) =>
-                          Image.asset('assets/images/bag_1.png'),
+                          Image.asset(kPlaceholderAndErrorAssetImage),
                     ),
                   ),
                 ),
