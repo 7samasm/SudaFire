@@ -22,17 +22,14 @@ class Body extends StatelessWidget {
         //   ),
         // ),
         // const CategoriesList(),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ProductListHorizontalScroll(
-                    category: 'laptops', title: 'laptops'),
-                ProductListHorizontalScroll(
-                    category: 'phones', title: 'phones'),
-              ],
-            ),
+        SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProductListHorizontalScroll(
+                  category: 'laptops', title: 'laptops'),
+              ProductListHorizontalScroll(category: 'phones', title: 'phones'),
+            ],
           ),
         ),
       ],

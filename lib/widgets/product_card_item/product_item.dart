@@ -30,71 +30,73 @@ class ProductItem extends StatelessWidget {
             ),
           );
         },
-        child: DecoratedBox(
-          decoration: const BoxDecoration(),
-          child: Padding(
-            padding: const EdgeInsets.all(kDefaultPadding / 4.5),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Consumer(builder: (context, ref, child) {
-                    return IconButton.filledTonal(
-                      style: const ButtonStyle().copyWith(
-                        minimumSize: const MaterialStatePropertyAll(
-                          Size.square(30),
-                        ),
+        child: Padding(
+          padding: const EdgeInsets.all(kDefaultPadding / 4.5),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Consumer(builder: (context, ref, child) {
+                  return IconButton.filledTonal(
+                    style: const ButtonStyle().copyWith(
+                      minimumSize: const MaterialStatePropertyAll(
+                        Size.square(30),
                       ),
-                      onPressed: () {
-                        ref.read(cartProvider.notifier).addCartItem(_product);
-                      },
-                      icon: const Icon(
-                        Icons.add_shopping_cart_outlined,
-                        size: 20,
-                      ),
-                    );
-                  }),
-                ),
-                Hero(
-                  tag: _product.id,
-                  child: FadeInImage(
-                    fit: BoxFit.contain,
-                    width: 100,
-                    height: 100,
-                    image: NetworkImage(_product.imageUrl),
-                    // AssetImage('assets/images/bag_6.png'),
-                    placeholder: const AssetImage('assets/images/bag_6.png'),
-                    imageErrorBuilder: (context, error, stackTrace) =>
-                        Image.asset('assets/images/bag_6.png'),
+                    ),
+                    onPressed: () {
+                      ref.read(cartProvider.notifier).addCartItem(_product);
+                    },
+                    icon: const Icon(
+                      Icons.add_shopping_cart_outlined,
+                      size: 20,
+                    ),
+                  );
+                }),
+              ),
+              SizedBox(
+                height: 100,
+                child: FittedBox(
+                  child: Hero(
+                    tag: _product.id,
+                    child: FadeInImage(
+                      fit: BoxFit.contain,
+                      width: 100,
+                      height: 100,
+                      image: NetworkImage(_product.imageUrl),
+                      // AssetImage('assets/images/bag_6.png'),
+                      placeholder: const AssetImage('assets/images/bag_1.png'),
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          Image.asset('assets/images/bag_1.png'),
+                    ),
                   ),
                 ),
+              ),
 
-                // Image.network(
-                //   _product.imageUrl,
-                //   fit: BoxFit.contain,
-                //   width: 100,
-                //   height: 100,
-                // ),
+              // Image.network(
+              //   _product.imageUrl,
+              //   fit: BoxFit.contain,
+              //   width: 100,
+              //   height: 100,
+              // ),
 
-                const Gap(10),
-                Text(
-                  _product.title,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                ),
-                const Gap(10),
-                Text(
-                  '\$${_product.price.toStringAsFixed(2)}',
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        // color: Theme.of(context).colorScheme.secondary,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54,
-                      ),
-                ),
-              ],
-            ),
+              const Gap(10),
+              Text(
+                _product.title,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      overflow: TextOverflow.ellipsis,
+                    ),
+              ),
+              const Gap(10),
+              Text(
+                '\$${_product.price.toStringAsFixed(2)}',
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      // color: Theme.of(context).colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54,
+                    ),
+              ),
+            ],
           ),
         ),
       ),

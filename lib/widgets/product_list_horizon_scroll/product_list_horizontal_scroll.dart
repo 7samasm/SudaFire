@@ -117,8 +117,7 @@ class _ProductListHorizontalScrollState
                 ),
                 Text('$_totalResults results'),
                 SizedBox(
-                  height: 230,
-                  // width: 200,
+                  height: 220,
                   child: NotificationListener<ScrollEndNotification>(
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
