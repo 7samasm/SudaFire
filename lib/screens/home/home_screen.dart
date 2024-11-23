@@ -79,9 +79,6 @@ class CustomDrawer extends StatelessWidget {
             padding: const EdgeInsets.all(0),
             child: UserAccountsDrawerHeader(
               margin: const EdgeInsets.only(bottom: 0),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-              ),
               accountName: const Text('later'),
               accountEmail: Text('${user!.email}'),
               currentAccountPicture: const CircleAvatar(

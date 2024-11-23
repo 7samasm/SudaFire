@@ -61,6 +61,12 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
             .toList();
     state = decodedItems;
   }
+
+  void clearCartItems() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('cart-items');
+    state = [];
+  }
 }
 
 final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>(

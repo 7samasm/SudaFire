@@ -68,6 +68,23 @@ class CartScreen extends ConsumerWidget {
                   foregroundColor: Theme.of(context).colorScheme.secondary,
                 ),
               ),
+              PopupMenuButton(
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      padding: const EdgeInsets.all(0),
+                      onTap: () {
+                        ref.read(cartProvider.notifier).clearCartItems();
+                      },
+                      child: const ListTile(
+                        dense: true,
+                        leading: Icon(Icons.delete_forever_outlined),
+                        title: Text('delete all items'),
+                      ),
+                    ),
+                  ];
+                },
+              )
             ],
           ),
         ),
