@@ -115,7 +115,25 @@ class _ProductListHorizontalScrollState
                       .bodyLarge!
                       .copyWith(height: 3),
                 ),
-                Text('$_totalResults results'),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '$_totalResults',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                      ),
+                      const TextSpan(
+                        text: ' results',
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 220,
                   child: NotificationListener<ScrollEndNotification>(
