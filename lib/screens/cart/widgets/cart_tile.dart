@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/screens/details/details_screen.dart';
@@ -30,7 +31,7 @@ class CartTile extends ConsumerWidget {
         );
       },
       leading: FadeInImage(
-        image: NetworkImage(cartItem.product.imageUrl),
+        image: CachedNetworkImageProvider(cartItem.product.imageUrl),
         // AssetImage('assets/images/bag_6.png'),
         placeholder: const AssetImage(kPlaceholderAndErrorAssetImage),
         imageErrorBuilder: (context, error, stackTrace) =>

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -48,7 +49,7 @@ class ProductItem extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.add_shopping_cart_outlined,
-                      size: 20,
+                      size: kDefaultPadding,
                     ),
                   );
                 }),
@@ -62,7 +63,7 @@ class ProductItem extends StatelessWidget {
                       fit: BoxFit.contain,
                       width: 100,
                       height: 100,
-                      image: NetworkImage(_product.imageUrl),
+                      image: CachedNetworkImageProvider(_product.imageUrl),
                       // AssetImage('assets/images/bag_6.png'),
                       placeholder:
                           const AssetImage(kPlaceholderAndErrorAssetImage),

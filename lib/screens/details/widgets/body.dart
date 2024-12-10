@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:shop_fire/models/product/product.dart';
@@ -91,7 +92,7 @@ class Body extends StatelessWidget {
                       tag: product.id,
                       child: FadeInImage(
                         width: 220,
-                        image: NetworkImage(product.imageUrl),
+                        image: CachedNetworkImageProvider(product.imageUrl),
                         // AssetImage('assets/images/bag_6.png'),
                         placeholder:
                             const AssetImage(kPlaceholderAndErrorAssetImage),

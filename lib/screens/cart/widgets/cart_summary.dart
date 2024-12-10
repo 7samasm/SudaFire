@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constans.dart';
@@ -60,7 +61,8 @@ class CartSummary extends StatelessWidget {
                               cartItem.quantity.toStringAsFixed(0),
                             ),
                             child: FadeInImage(
-                                image: NetworkImage(cartItem.product.imageUrl),
+                                image: CachedNetworkImageProvider(
+                                    cartItem.product.imageUrl),
                                 // AssetImage('assets/images/bag_6.png'),
                                 imageErrorBuilder: (context, error,
                                         stackTrace) =>
