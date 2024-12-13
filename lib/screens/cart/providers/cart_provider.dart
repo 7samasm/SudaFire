@@ -1,9 +1,22 @@
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
+import 'package:sqflite/sqflite.dart' as sql;
 import 'package:shop_fire/screens/cart/models/cart_item.dart';
 import 'package:shop_fire/models/product/product.dart';
+
+Future<sql.Database> _getDataBase() async {
+  final dbPath = await sql.getDatabasesPath();
+  final db = await sql.openDatabase(
+    path.join(dbPath, 'cart_items'),
+    onCreate: (db, version) {
+      return db.execute(
+        'CREATE TABLE cart_items(id TEXT PRIMARY KEY, title TEXT, description TEXT, category TEXT, imageUrl TEXT, price REAL, createdAt TEXT, quantity INT)',
+      );
+    },
+    version: 1,
+  );
+  return db;
+}
 
 class CartNotifier extends StateNotifier<List<CartItem>> {
   CartNotifier() : super([]);
@@ -14,9 +27,14 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     if (indexOfCartItem > -1) {
       updateQuantity(product: product);
     } else {
-      var items = [...state, CartItem(product: product)];
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('cart-items', json.encode(items));
+      final cartItem = CartItem(product: product);
+      var items = [...state, cartItem];
+      final db = await _getDataBase();
+      // await db.execute('DROP TABLE cart_items');
+      db.insert(
+        'cart_items',
+        {...cartItem.product.toJson(), 'quantity': cartItem.quantity},
+      );
       state = items;
     }
   }
@@ -26,45 +44,68 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     int amount = 1,
     bool isAddstion = true,
   }) async {
+    final db = await _getDataBase();
     var updatedItem = state.map(
       (stateEl) {
         var qty = stateEl.quantity + amount;
         if (!isAddstion) {
           qty = stateEl.quantity - amount;
         }
-        return stateEl.product == product
-            ? CartItem(product: product, quantity: qty)
-            : stateEl;
+        if (stateEl.product == product) {
+          db.update('cart_items', {'quantity': qty},
+              where: 'id == ?', whereArgs: [product.id]);
+          return CartItem(product: product, quantity: qty);
+        }
+        return stateEl;
       },
     ).toList();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('cart-items', json.encode(updatedItem));
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // prefs.setString('cart-items', json.encode(updatedItem));
+
     state = updatedItem;
   }
 
   void deleteCartItem(CartItem cartItem) async {
     var filteredItems = state.where((stateEl) => stateEl != cartItem).toList();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('cart-items', json.encode(filteredItems));
+    final db = await _getDataBase();
+    db.delete(
+      'cart_items',
+      where: 'id == ?',
+      whereArgs: [filteredItems[0].product.id],
+    );
     state = filteredItems;
   }
 
   void loadCartItems() async {
     print('loadCartItems() called');
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.get('cart-items') == null) {
+
+    final db = await _getDataBase();
+    // ignore: unnecessary_cast
+    final cartItems = await db.query('cart_items') as List<dynamic>;
+    if (cartItems.isEmpty) {
       state = [];
+      return;
     }
-    var decodedItems =
-        (json.decode(prefs.get('cart-items').toString()) as List<dynamic>)
-            .map((e) => CartItem.fromJson(e))
-            .toList();
-    state = decodedItems;
+    final decodedItems = (cartItems).map(
+      (row) => CartItem(
+        product: Product(
+          id: row['id'],
+          title: row['title'],
+          description: row['description'],
+          category: row['category'],
+          imageUrl: row['imageUrl'],
+          price: row['price'],
+          createdAt: row['createdAt'],
+        ),
+        quantity: row['quantity'],
+      ),
+    );
+    state = decodedItems.toList();
   }
 
   void clearCartItems() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('cart-items');
+    final db = await _getDataBase();
+    db.delete('cart_items');
     state = [];
   }
 }
