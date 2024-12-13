@@ -71,7 +71,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     db.delete(
       'cart_items',
       where: 'id == ?',
-      whereArgs: [filteredItems[0].product.id],
+      whereArgs: [cartItem.product.id],
     );
     state = filteredItems;
   }
