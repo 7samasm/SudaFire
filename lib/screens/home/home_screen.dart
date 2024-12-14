@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop_fire/providers/theme_mode_provider.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/cart/cart_screen.dart';
 import 'package:shop_fire/screens/home/widgets/body.dart';
@@ -15,19 +16,21 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print('HomeScreen called');
 
-    return Scaffold(
-      appBar: _buildAppBar(context),
-      drawer: const CustomDrawer(),
-      body: const Body(),
-    );
+    return Consumer(builder: (context, ref, _) {
+      return Scaffold(
+        appBar: _buildAppBar(context, ref),
+        drawer: const CustomDrawer(),
+        body: const Body(),
+      );
+    });
   }
 }
 
-AppBar _buildAppBar(BuildContext context) {
+AppBar _buildAppBar(BuildContext context, WidgetRef ref) {
   print('_buildAppBar() called');
 
   return AppBar(
-    backgroundColor: Colors.white,
+    backgroundColor: ref.read(ThemeModeProvider) ? null : Colors.white,
     elevation: 0,
     actions: <Widget>[
       IconButton(
@@ -44,6 +47,7 @@ AppBar _buildAppBar(BuildContext context) {
             count: totalCartItems,
             offset: const Offset(-3, 0),
             isLabelVisible: totalCartItems >= 1,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             child: IconButton(
               onPressed: () {
                 Navigator.push(
@@ -109,6 +113,7 @@ class CustomDrawer extends StatelessWidget {
                   count: totalCartItems,
                   offset: const Offset(10, -10),
                   isLabelVisible: totalCartItems >= 1,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
                   child: const Icon(Icons.shopping_cart_outlined),
                 );
               },
@@ -130,6 +135,17 @@ class CustomDrawer extends StatelessWidget {
               fireAuth.signOut();
             },
           ),
+          Consumer(builder: (context, ref, child) {
+            final isDark = ref.watch(ThemeModeProvider);
+            return SwitchListTile.adaptive(
+              title: const Text('dark mode'),
+              dense: true,
+              value: isDark,
+              onChanged: (val) {
+                ref.read(ThemeModeProvider.notifier).toggleMode();
+              },
+            );
+          }),
         ],
       ),
     );
