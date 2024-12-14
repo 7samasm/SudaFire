@@ -95,7 +95,7 @@ class ProductItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       // color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black54,
+                      // color: Colors.black54,
                     ),
               ),
             ],

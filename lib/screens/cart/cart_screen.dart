@@ -38,7 +38,7 @@ class CartScreen extends ConsumerWidget {
                     TextSpan(
                       text: '\$${_getTotalPrice(cartItems)}',
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.black54,
+                            // color: Colors.black54,
                             fontWeight: FontWeight.bold,
                           ),
                     ),

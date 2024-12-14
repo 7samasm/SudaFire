@@ -92,10 +92,8 @@ class CartSummary extends StatelessWidget {
                       Text.rich(
                         TextSpan(
                           text: 'total\n',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: Colors.black54),
+                          style: Theme.of(context).textTheme.bodySmall,
+                          // .copyWith(color: Colors.black54),
                           children: [
                             TextSpan(
                               text: totalPrice.toStringAsFixed(2),
@@ -103,7 +101,7 @@ class CartSummary extends StatelessWidget {
                                   .textTheme
                                   .bodyLarge!
                                   .copyWith(
-                                    color: Colors.black54,
+                                    // color: Colors.black54,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -117,8 +115,9 @@ class CartSummary extends StatelessWidget {
                         },
                         label: const Text('pay'),
                         icon: const Icon(Icons.payment_outlined),
-                        style:
-                            TextButton.styleFrom(foregroundColor: Colors.black),
+                        style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(context).colorScheme.secondary),
                       ),
                       TextButton.icon(
                         onPressed: () {
@@ -126,8 +125,9 @@ class CartSummary extends StatelessWidget {
                         },
                         label: const Text('cancel'),
                         icon: const Icon(Icons.clear_outlined),
-                        style:
-                            TextButton.styleFrom(foregroundColor: Colors.black),
+                        style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(context).colorScheme.secondary),
                       ),
                     ],
                   ),
