@@ -30,7 +30,7 @@ AppBar _buildAppBar(BuildContext context, WidgetRef ref) {
   print('_buildAppBar() called');
 
   return AppBar(
-    backgroundColor: ref.read(ThemeModeProvider) ? null : Colors.white,
+    backgroundColor: ref.read(themeModeProvider) ? null : Colors.white,
     elevation: 0,
     actions: <Widget>[
       IconButton(
@@ -135,17 +135,22 @@ class CustomDrawer extends StatelessWidget {
               fireAuth.signOut();
             },
           ),
-          Consumer(builder: (context, ref, child) {
-            final isDark = ref.watch(ThemeModeProvider);
-            return SwitchListTile.adaptive(
-              title: const Text('dark mode'),
-              dense: true,
-              value: isDark,
-              onChanged: (val) {
-                ref.read(ThemeModeProvider.notifier).toggleMode();
-              },
-            );
-          }),
+          Consumer(
+            builder: (context, ref, child) {
+              final isDark = ref.read(themeModeProvider);
+              return ListTile(
+                dense: true,
+                leading: const Icon(Icons.dark_mode_outlined),
+                title: const Text('dark mode'),
+                trailing: Switch.adaptive(
+                  value: isDark,
+                  onChanged: (v) {
+                    ref.read(themeModeProvider.notifier).toggleMode();
+                  },
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

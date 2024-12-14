@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final isDarkMode = ref.watch(ThemeModeProvider);
+      final isDarkMode = ref.watch(themeModeProvider);
       var theme = ThemeData.dark().copyWith(useMaterial3: true);
       if (!isDarkMode) {
         theme = ThemeData().copyWith(
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
               return Consumer(
                 builder: (context, ref, child) {
                   ref.read(cartProvider.notifier).loadCartItems();
-                  ref.read(ThemeModeProvider.notifier).loadDarkMode();
+                  ref.read(themeModeProvider.notifier).loadDarkMode();
                   return const HomeScreen();
                 },
               );

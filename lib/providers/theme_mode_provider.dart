@@ -16,6 +16,6 @@ class ThemeModeNotifier extends StateNotifier<bool> {
   }
 }
 
-final ThemeModeProvider = StateNotifierProvider<ThemeModeNotifier, bool>(
+final themeModeProvider = StateNotifierProvider<ThemeModeNotifier, bool>(
   (ref) => ThemeModeNotifier(),
 );
