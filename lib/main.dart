@@ -22,7 +22,7 @@ void main() async {
   );
 }
 
-var kcolorScheme = ColorScheme.fromSeed(
+final kcolorScheme = ColorScheme.fromSeed(
   seedColor: Colors.indigo,
   secondary: Colors.pink,
 );
@@ -34,9 +34,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final isDarkMode = ref.watch(themeModeProvider);
-      var theme = ThemeData.dark().copyWith(useMaterial3: true);
-      if (!isDarkMode) {
+      final mode = ref.watch(themeModeProvider);
+      ThemeData theme = ThemeData.dark().copyWith(
+        useMaterial3: true,
+        colorScheme: const ColorScheme.dark().copyWith(primary: Colors.teal),
+        switchTheme: const SwitchThemeData(
+          thumbColor: MaterialStatePropertyAll(Colors.cyan),
+        ),
+      );
+      if (!ref.read(themeModeProvider.notifier).isDark) {
         theme = ThemeData().copyWith(
           colorScheme: kcolorScheme,
           appBarTheme: const AppBarTheme().copyWith(

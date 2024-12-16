@@ -30,7 +30,8 @@ AppBar _buildAppBar(BuildContext context, WidgetRef ref) {
   print('_buildAppBar() called');
 
   return AppBar(
-    backgroundColor: ref.read(themeModeProvider) ? null : Colors.white,
+    backgroundColor:
+        ref.read(themeModeProvider.notifier).isDark ? null : Colors.white,
     elevation: 0,
     actions: <Widget>[
       IconButton(
@@ -137,13 +138,13 @@ class CustomDrawer extends StatelessWidget {
           ),
           Consumer(
             builder: (context, ref, child) {
-              final isDark = ref.read(themeModeProvider);
+              ref.watch(themeModeProvider);
               return ListTile(
                 dense: true,
                 leading: const Icon(Icons.dark_mode_outlined),
                 title: const Text('dark mode'),
                 trailing: Switch.adaptive(
-                  value: isDark,
+                  value: ref.read(themeModeProvider.notifier).isDark,
                   onChanged: (v) {
                     ref.read(themeModeProvider.notifier).toggleMode();
                   },
