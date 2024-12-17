@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop_fire/providers/fire_ource_provider.dart';
 
 import 'package:shop_fire/widgets/product_card_item/product_item.dart';
 import 'package:shop_fire/widgets/product_list_horizon_scroll/product_list_loader.dart';
@@ -7,7 +9,7 @@ import 'package:shop_fire/widgets/product_list_horizon_scroll/product_list_loade
 import '../../constans.dart';
 import '../../models/product/product.dart';
 
-class ProductListHorizontalScroll extends StatefulWidget {
+class ProductListHorizontalScroll extends ConsumerStatefulWidget {
   const ProductListHorizontalScroll({
     required this.category,
     required this.title,
@@ -22,12 +24,12 @@ class ProductListHorizontalScroll extends StatefulWidget {
   final String pageTitle;
 
   @override
-  State<ProductListHorizontalScroll> createState() =>
+  ConsumerState<ProductListHorizontalScroll> createState() =>
       _ProductListHorizontalScrollState();
 }
 
 class _ProductListHorizontalScrollState
-    extends State<ProductListHorizontalScroll> {
+    extends ConsumerState<ProductListHorizontalScroll> {
   // ignore: prefer_final_fields
   List<Product> _products = [];
   static const kPageSize = 6;
@@ -60,7 +62,8 @@ class _ProductListHorizontalScrollState
             .where('category', isEqualTo: widget.category);
       }
       // get total count before limit  from query above
-      var count = await query.get();
+      var count =
+          await query.get(GetOptions(source: ref.read(fireSourcProvider)));
       if (mounted) {
         setState(() {
           _totalResults = count.size;
@@ -70,7 +73,8 @@ class _ProductListHorizontalScrollState
       query = _lastDocument != null
           ? query.startAfterDocument(_lastDocument!).limit(kPageSize)
           : query.limit(kPageSize);
-      final value = await query.get();
+      final value =
+          await query.get(GetOptions(source: ref.read(fireSourcProvider)));
 
       // get last doc if fetched result not empty
       _lastDocument = value.docs.isNotEmpty ? value.docs.last : null;

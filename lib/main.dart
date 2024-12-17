@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final mode = ref.watch(themeModeProvider);
+      ref.watch(themeModeProvider);
       ThemeData theme = ThemeData.dark().copyWith(
         useMaterial3: true,
         colorScheme: const ColorScheme.dark().copyWith(primary: Colors.teal),
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
                 body: Center(
-                  child: Text('loading ...'),
+                  child: CircularProgressIndicator(),
                 ),
               );
             }

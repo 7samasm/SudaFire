@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop_fire/providers/fire_ource_provider.dart';
 import 'package:shop_fire/providers/theme_mode_provider.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/cart/cart_screen.dart';
@@ -146,6 +147,9 @@ class CustomDrawer extends StatelessWidget {
                 trailing: Switch.adaptive(
                   value: ref.read(themeModeProvider.notifier).isDark,
                   onChanged: (v) {
+                    ref
+                        .read(fireSourcProvider.notifier)
+                        .changeSourceToCacheAndRevertAfterSeconds();
                     ref.read(themeModeProvider.notifier).toggleMode();
                   },
                 ),
