@@ -12,16 +12,19 @@ class ProductItem extends StatelessWidget {
   const ProductItem({
     required this.product,
     this.showCartIcon = true,
+    this.width = 120,
     super.key,
   });
   final Product product;
   final bool showCartIcon;
+  final double width;
   @override
   Widget build(BuildContext context) {
     // final heroTag = '${ModalRoute.of(context)!.settings.name}-${product.id}';
     return SizedBox(
       width: 120,
       child: InkWell(
+        borderRadius: BorderRadius.circular(10),
         onTap: () {
           Navigator.push(
             context,

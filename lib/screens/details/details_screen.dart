@@ -39,6 +39,7 @@ class DetailsScreen extends ConsumerWidget {
           Badge.count(
             count: totalItems,
             offset: const Offset(-3, 0),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             isLabelVisible: totalItems >= 1,
             child: IconButton(
               onPressed: () {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shop_fire/models/product/product.dart';
 import 'package:shop_fire/widgets/product_card_item/product_item.dart';
 
+import '../../../constans.dart';
+
 class CustomSearchDelegate extends SearchDelegate {
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -48,13 +50,15 @@ class CustomSearchDelegate extends SearchDelegate {
         return GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
+            mainAxisSpacing: kDefaultPadding / 2,
+            crossAxisSpacing: kDefaultPadding / 2,
+            childAspectRatio: 0.9,
           ),
           itemCount: results.length,
-          // padding: const EdgeInsets.all(kDefaultPadding / 4),
+          padding: const EdgeInsets.all(kDefaultPadding),
           itemBuilder: (context, index) {
             final document = results[index];
-            return FittedBox(
-              fit: BoxFit.contain,
+            return Card(
               child: ProductItem(
                 product: Product.fromDocument(document),
                 showCartIcon: false,
