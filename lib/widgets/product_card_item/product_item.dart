@@ -9,14 +9,16 @@ import '../../models/product/product.dart';
 import '../../screens/details/details_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem(
-    this._product, {
+  const ProductItem({
+    required this.product,
+    this.showCartIcon = true,
     super.key,
   });
-  final Product _product;
+  final Product product;
+  final bool showCartIcon;
   @override
   Widget build(BuildContext context) {
-    // final heroTag = '${ModalRoute.of(context)!.settings.name}-${_product.id}';
+    // final heroTag = '${ModalRoute.of(context)!.settings.name}-${product.id}';
     return SizedBox(
       width: 120,
       child: InkWell(
@@ -26,7 +28,7 @@ class ProductItem extends StatelessWidget {
             MaterialPageRoute(
               settings: const RouteSettings(name: 'details'),
               builder: (ctx) => DetailsScreen(
-                product: _product,
+                product: product,
               ),
             ),
           );
@@ -35,35 +37,36 @@ class ProductItem extends StatelessWidget {
           padding: const EdgeInsets.all(kDefaultPadding / 4.5),
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Consumer(builder: (context, ref, child) {
-                  return IconButton.filledTonal(
-                    style: const ButtonStyle().copyWith(
-                      minimumSize: const MaterialStatePropertyAll(
-                        Size.square(30),
+              if (showCartIcon)
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Consumer(builder: (context, ref, child) {
+                    return IconButton.filledTonal(
+                      style: const ButtonStyle().copyWith(
+                        minimumSize: const MaterialStatePropertyAll(
+                          Size.square(30),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      ref.read(cartProvider.notifier).addCartItem(_product);
-                    },
-                    icon: const Icon(
-                      Icons.add_shopping_cart_outlined,
-                      size: kDefaultPadding,
-                    ),
-                  );
-                }),
-              ),
+                      onPressed: () {
+                        ref.read(cartProvider.notifier).addCartItem(product);
+                      },
+                      icon: const Icon(
+                        Icons.add_shopping_cart_outlined,
+                        size: kDefaultPadding,
+                      ),
+                    );
+                  }),
+                ),
               SizedBox(
                 height: 100,
                 child: FittedBox(
                   child: Hero(
-                    tag: _product.id,
+                    tag: product.id,
                     child: FadeInImage(
                       fit: BoxFit.contain,
                       width: 100,
                       height: 100,
-                      image: CachedNetworkImageProvider(_product.imageUrl),
+                      image: CachedNetworkImageProvider(product.imageUrl),
                       // AssetImage('assets/images/bag_6.png'),
                       placeholder:
                           const AssetImage(kPlaceholderAndErrorAssetImage),
@@ -75,7 +78,7 @@ class ProductItem extends StatelessWidget {
               ),
 
               // Image.network(
-              //   _product.imageUrl,
+              //   product.imageUrl,
               //   fit: BoxFit.contain,
               //   width: 100,
               //   height: 100,
@@ -83,7 +86,7 @@ class ProductItem extends StatelessWidget {
 
               const Gap(10),
               Text(
-                _product.title,
+                product.title,
                 maxLines: 1,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       overflow: TextOverflow.ellipsis,
@@ -91,7 +94,7 @@ class ProductItem extends StatelessWidget {
               ),
               const Gap(10),
               Text(
-                '\$${_product.price.toStringAsFixed(2)}',
+                '\$${product.price.toStringAsFixed(2)}',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       // color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,

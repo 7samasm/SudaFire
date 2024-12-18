@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_fire/constans.dart';
 import 'package:shop_fire/models/product/product.dart';
 import 'package:shop_fire/widgets/product_card_item/product_item.dart';
 
@@ -38,7 +37,7 @@ class CustomSearchDelegate extends SearchDelegate {
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
         final results = snapshot.data!.docs;
         if (results.isEmpty) {
@@ -51,12 +50,15 @@ class CustomSearchDelegate extends SearchDelegate {
             crossAxisCount: 2,
           ),
           itemCount: results.length,
-          padding: const EdgeInsets.all(kDefaultPadding / 4),
+          // padding: const EdgeInsets.all(kDefaultPadding / 4),
           itemBuilder: (context, index) {
             final document = results[index];
             return FittedBox(
               fit: BoxFit.contain,
-              child: ProductItem(Product.fromDocument(document)),
+              child: ProductItem(
+                product: Product.fromDocument(document),
+                showCartIcon: false,
+              ),
             );
           },
         );
@@ -74,7 +76,7 @@ class CustomSearchDelegate extends SearchDelegate {
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
         final suggestions = snapshot.data!.docs;
         if (suggestions.isEmpty) {

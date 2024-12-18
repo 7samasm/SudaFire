@@ -162,7 +162,7 @@ class _ProductListHorizontalScrollState
 
                         if (i <= _products.length - 1) {
                           final product = _products[i];
-                          return ProductItem(product);
+                          return ProductItem(product: product);
                         }
 
                         return null;
