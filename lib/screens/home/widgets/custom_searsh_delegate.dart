@@ -31,6 +31,11 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    if (query.isEmpty) {
+      return const Center(
+        child: Text('no results found!'),
+      );
+    }
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('products')
@@ -72,6 +77,11 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) {
+      return const Center(
+        child: Text('no results found!'),
+      );
+    }
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('products')

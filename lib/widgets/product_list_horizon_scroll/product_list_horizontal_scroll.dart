@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop_fire/providers/fire_ource_provider.dart';
+import 'package:shop_fire/providers/fire_source_provider.dart';
 
 import 'package:shop_fire/widgets/product_card_item/product_item.dart';
 import 'package:shop_fire/widgets/product_list_horizon_scroll/product_list_loader.dart';
