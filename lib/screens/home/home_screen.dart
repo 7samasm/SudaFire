@@ -5,6 +5,7 @@ import 'package:shop_fire/providers/fire_source_provider.dart';
 import 'package:shop_fire/providers/theme_mode_provider.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/cart/cart_screen.dart';
+import 'package:shop_fire/screens/favorites/favorites_screen.dart';
 import 'package:shop_fire/screens/home/widgets/body.dart';
 import 'package:shop_fire/screens/home/widgets/custom_searsh_delegate.dart';
 
@@ -131,6 +132,18 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             dense: true,
+            leading: const Icon(Icons.favorite_outline),
+            title: const Text('favorites'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const FavoritesScreen(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            dense: true,
             leading: const Icon(Icons.exit_to_app),
             title: const Text('log out'),
             onTap: () {
@@ -140,17 +153,18 @@ class CustomDrawer extends StatelessWidget {
           Consumer(
             builder: (context, ref, child) {
               ref.watch(themeModeProvider);
+              final themeNotifier = ref.read(themeModeProvider.notifier);
               return ListTile(
                 dense: true,
                 leading: const Icon(Icons.dark_mode_outlined),
                 title: const Text('dark mode'),
                 trailing: Switch.adaptive(
-                  value: ref.read(themeModeProvider.notifier).isDark,
+                  value: themeNotifier.isDark,
                   onChanged: (v) {
                     ref
                         .read(fireSourcProvider.notifier)
                         .changeSourceToCacheAndRevertAfterSeconds();
-                    ref.read(themeModeProvider.notifier).toggleMode();
+                    themeNotifier.toggleMode();
                   },
                 ),
               );

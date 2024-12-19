@@ -7,7 +7,7 @@ import 'package:shop_fire/models/product/product.dart';
 Future<sql.Database> _getDataBase() async {
   final dbPath = await sql.getDatabasesPath();
   final db = await sql.openDatabase(
-    path.join(dbPath, 'cart_items'),
+    path.join(dbPath, 'shop'),
     onCreate: (db, version) {
       return db.execute(
         'CREATE TABLE cart_items(id TEXT PRIMARY KEY, title TEXT, description TEXT, category TEXT, imageUrl TEXT, price REAL, createdAt TEXT, quantity INT)',
@@ -80,6 +80,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     print('loadCartItems() called');
 
     final db = await _getDataBase();
+    // db.execute('DROP TABLE cart_items');
     // ignore: unnecessary_cast
     final cartItems = await db.query('cart_items') as List<dynamic>;
     if (cartItems.isEmpty) {

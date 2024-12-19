@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shop_fire/providers/favorite_provider.dart';
 import 'package:shop_fire/providers/theme_mode_provider.dart';
 import 'package:shop_fire/screens/auth/auth_screen.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
               return Consumer(
                 builder: (context, ref, child) {
                   ref.read(cartProvider.notifier).loadCartItems();
+                  ref.read(favoriteProvider.notifier).loadFavoriets();
                   ref.read(themeModeProvider.notifier).loadDarkMode();
                   return const HomeScreen();
                 },
