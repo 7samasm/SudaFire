@@ -154,19 +154,17 @@ class CustomDrawer extends StatelessWidget {
             builder: (context, ref, child) {
               ref.watch(themeModeProvider);
               final themeNotifier = ref.read(themeModeProvider.notifier);
-              return ListTile(
+              return SwitchListTile.adaptive(
                 dense: true,
-                leading: const Icon(Icons.dark_mode_outlined),
+                secondary: const Icon(Icons.dark_mode_outlined),
                 title: const Text('dark mode'),
-                trailing: Switch.adaptive(
-                  value: themeNotifier.isDark,
-                  onChanged: (v) {
-                    ref
-                        .read(fireSourcProvider.notifier)
-                        .changeSourceToCacheAndRevertAfterSeconds();
-                    themeNotifier.toggleMode();
-                  },
-                ),
+                value: themeNotifier.isDark,
+                onChanged: (v) {
+                  ref
+                      .read(fireSourcProvider.notifier)
+                      .changeSourceToCacheAndRevertAfterAwhile();
+                  themeNotifier.toggleMode();
+                },
               );
             },
           ),

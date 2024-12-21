@@ -33,7 +33,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     if (query.isEmpty) {
       return const Center(
-        child: Text('no results found!'),
+        child: Text('start to type!'),
       );
     }
     return StreamBuilder(
@@ -79,7 +79,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     if (query.isEmpty) {
       return const Center(
-        child: Text('no results found!'),
+        child: Text('start to type!'),
       );
     }
     return StreamBuilder(

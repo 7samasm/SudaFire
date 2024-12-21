@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FireSourcNotifier extends StateNotifier<Source> {
   FireSourcNotifier() : super(Source.serverAndCache);
-  changeSourceToCacheAndRevertAfterSeconds() {
+  changeSourceToCacheAndRevertAfterAwhile() {
     state = Source.cache;
     Future.delayed(const Duration(milliseconds: 400)).then(
       (value) {
