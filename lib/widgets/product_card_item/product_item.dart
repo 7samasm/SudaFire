@@ -12,11 +12,13 @@ class ProductItem extends StatelessWidget {
   const ProductItem({
     required this.product,
     this.showCartIcon = true,
+    this.showHero = false,
     this.width = 120,
     super.key,
   });
   final Product product;
   final bool showCartIcon;
+  final bool showHero;
   final double width;
   @override
   Widget build(BuildContext context) {
@@ -63,18 +65,21 @@ class ProductItem extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: FittedBox(
-                  child: Hero(
-                    tag: product.id,
-                    child: FadeInImage(
-                      fit: BoxFit.contain,
-                      width: 100,
-                      height: 100,
-                      image: CachedNetworkImageProvider(product.imageUrl),
-                      // AssetImage('assets/images/bag_6.png'),
-                      placeholder:
-                          const AssetImage(kPlaceholderAndErrorAssetImage),
-                      imageErrorBuilder: (context, error, stackTrace) =>
-                          Image.asset(kPlaceholderAndErrorAssetImage),
+                  child: HeroMode(
+                    enabled: showHero,
+                    child: Hero(
+                      tag: product.id,
+                      child: FadeInImage(
+                        fit: BoxFit.contain,
+                        width: 100,
+                        height: 100,
+                        image: CachedNetworkImageProvider(product.imageUrl),
+                        // AssetImage('assets/images/bag_6.png'),
+                        placeholder:
+                            const AssetImage(kPlaceholderAndErrorAssetImage),
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            Image.asset(kPlaceholderAndErrorAssetImage),
+                      ),
                     ),
                   ),
                 ),

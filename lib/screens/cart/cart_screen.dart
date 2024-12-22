@@ -79,7 +79,7 @@ class CartScreen extends ConsumerWidget {
                       child: const ListTile(
                         dense: true,
                         leading: Icon(Icons.delete_forever_outlined),
-                        title: Text('delete all items'),
+                        title: Text('delete all'),
                       ),
                     ),
                   ];

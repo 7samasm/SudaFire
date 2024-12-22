@@ -31,7 +31,12 @@ class _CartListItemsState extends State<CartListItems> {
             ),
           );
         }
-        return const Spacer();
+        return OverlayPortal(
+          controller: OverlayPortalController(),
+          overlayChildBuilder: (context) {
+            return const Spacer();
+          },
+        );
       },
     );
   }

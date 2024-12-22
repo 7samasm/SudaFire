@@ -114,3 +114,5 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>(
   (ref) => CartNotifier(),
 );
+
+final cartLengthProvider = Provider((ref) => ref.watch(cartProvider).length);

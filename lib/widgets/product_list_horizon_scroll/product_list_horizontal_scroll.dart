@@ -30,8 +30,7 @@ class ProductListHorizontalScroll extends ConsumerStatefulWidget {
 
 class _ProductListHorizontalScrollState
     extends ConsumerState<ProductListHorizontalScroll> {
-  // ignore: prefer_final_fields
-  List<Product> _products = [];
+  final List<Product> _products = [];
   static const kPageSize = 6;
   bool _isLoading = false;
   DocumentSnapshot? _lastDocument;
@@ -162,7 +161,10 @@ class _ProductListHorizontalScrollState
 
                         if (i <= _products.length - 1) {
                           final product = _products[i];
-                          return ProductItem(product: product);
+                          return ProductItem(
+                            product: product,
+                            showHero: true,
+                          );
                         }
 
                         return null;

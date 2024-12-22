@@ -16,24 +16,22 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('HomeScreen called');
-
-    return Consumer(builder: (context, ref, _) {
-      return Scaffold(
-        appBar: _buildAppBar(context, ref),
-        drawer: const CustomDrawer(),
-        body: const Body(),
-      );
-    });
+    return Scaffold(
+      appBar: _buildAppBar(context),
+      drawer: const CustomDrawer(),
+      body: const Body(),
+    );
   }
 }
 
-AppBar _buildAppBar(BuildContext context, WidgetRef ref) {
-  print('_buildAppBar() called');
+final fireAuth = FirebaseAuth.instance;
+final user = fireAuth.currentUser;
 
+AppBar _buildAppBar(BuildContext context) {
+  print('_buildAppBar() called');
   return AppBar(
-    backgroundColor:
-        ref.read(themeModeProvider.notifier).isDark ? null : Colors.white,
+    // backgroundColor:
+    // ref.read(themeModeProvider.notifier).isDark ? null : Colors.white,
     elevation: 0,
     actions: <Widget>[
       IconButton(
@@ -44,8 +42,8 @@ AppBar _buildAppBar(BuildContext context, WidgetRef ref) {
       ),
       Consumer(
         builder: (context, ref, child) {
-          // ref.read(cartProvider.notifier).loadCartItems();
-          final totalCartItems = ref.watch(cartProvider).length;
+          print('Consumer builder called for cart icon in the app bar');
+          final totalCartItems = ref.watch(cartLengthProvider);
           return Badge.count(
             count: totalCartItems,
             offset: const Offset(-3, 0),
@@ -69,9 +67,6 @@ AppBar _buildAppBar(BuildContext context, WidgetRef ref) {
   );
 }
 
-final fireAuth = FirebaseAuth.instance;
-final user = fireAuth.currentUser;
-
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
@@ -87,7 +82,7 @@ class CustomDrawer extends StatelessWidget {
             child: UserAccountsDrawerHeader(
               margin: const EdgeInsets.only(bottom: 0),
               accountName: const Text('later'),
-              accountEmail: Text('${user!.email}'),
+              accountEmail: Text('${user?.email}'),
               currentAccountPicture: const CircleAvatar(
                 child: FlutterLogo(
                   size: 42,
@@ -97,9 +92,11 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             dense: true,
+            style: ListTileStyle.drawer,
             leading: const Icon(Icons.add),
             title: const Text('add product'),
             onTap: () {
+              closeDrawer(context);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const AddProductScreen(),
@@ -109,9 +106,10 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             dense: true,
+            style: ListTileStyle.drawer,
             leading: Consumer(
               builder: (context, ref, child) {
-                final totalCartItems = ref.watch(cartProvider).length;
+                final totalCartItems = ref.watch(cartLengthProvider);
                 return Badge.count(
                   count: totalCartItems,
                   offset: const Offset(10, -10),
@@ -123,6 +121,7 @@ class CustomDrawer extends StatelessWidget {
             ),
             title: const Text('cart'),
             onTap: () {
+              closeDrawer(context);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const CartScreen(),
@@ -132,9 +131,11 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             dense: true,
+            style: ListTileStyle.drawer,
             leading: const Icon(Icons.favorite_outline),
             title: const Text('favorites'),
             onTap: () {
+              closeDrawer(context);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const FavoritesScreen(),
@@ -144,6 +145,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             dense: true,
+            style: ListTileStyle.drawer,
             leading: const Icon(Icons.exit_to_app),
             title: const Text('log out'),
             onTap: () {
@@ -171,5 +173,9 @@ class CustomDrawer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void closeDrawer(BuildContext context) {
+    Navigator.pop(context);
   }
 }
