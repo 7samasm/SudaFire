@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_fire/models/product/product.dart';
-import 'package:shop_fire/widgets/product_card_item/product_item.dart';
 
-import '../../../constans.dart';
+import 'package:shop_fire/screens/home/widgets/search/search_result.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   @override
@@ -31,48 +29,12 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.isEmpty) {
-      return const Center(
-        child: Text('start to type!'),
-      );
-    }
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('products')
-          .where('title', isGreaterThanOrEqualTo: query)
-          .where('title', isLessThanOrEqualTo: '$query\uf8ff')
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        final results = snapshot.data!.docs;
-        if (results.isEmpty) {
-          return const Center(
-            child: Text('no results found!'),
-          );
-        }
-        return GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: kDefaultPadding / 2,
-            crossAxisSpacing: kDefaultPadding / 2,
-            childAspectRatio: 0.9,
-          ),
-          itemCount: results.length,
-          padding: const EdgeInsets.all(kDefaultPadding),
-          itemBuilder: (context, index) {
-            final document = results[index];
-            return Card(
-              child: ProductItem(
-                product: Product.fromDocument(document),
-                showCartIcon: false,
-              ),
-            );
-          },
-        );
-      },
-    );
+    // if (query.isEmpty) {
+    //   return const Center(
+    //     child: Text('start to type!'),
+    //   );
+    // }
+    return SearchResult(query: query);
   }
 
   @override

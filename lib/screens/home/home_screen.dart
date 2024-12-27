@@ -7,7 +7,7 @@ import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/cart/cart_screen.dart';
 import 'package:shop_fire/screens/favorites/favorites_screen.dart';
 import 'package:shop_fire/screens/home/widgets/body.dart';
-import 'package:shop_fire/screens/home/widgets/custom_searsh_delegate.dart';
+import 'package:shop_fire/screens/home/widgets/search/custom_search_delegate.dart';
 
 import '../add_product/add_product_screen.dart';
 
@@ -81,7 +81,7 @@ class CustomDrawer extends StatelessWidget {
             padding: const EdgeInsets.all(0),
             child: UserAccountsDrawerHeader(
               margin: const EdgeInsets.only(bottom: 0),
-              accountName: const Text('later'),
+              accountName: Text(user?.displayName ?? 'null'),
               accountEmail: Text('${user?.email}'),
               currentAccountPicture: const CircleAvatar(
                 child: FlutterLogo(

@@ -22,7 +22,7 @@ class CartTile extends ConsumerWidget {
     // print('CartTile called');
     return ListTile(
       onTap: () {
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
               return DetailsScreen(product: cartItem.product);
