@@ -69,14 +69,14 @@ class CartSummary extends StatelessWidget {
           ),
         ],
       ),
-      passButton: TextButton.icon(
+      action: TextButton.icon(
         onPressed: () {
           Navigator.of(context).pop();
         },
         label: const Text('pay'),
         icon: const Icon(Icons.payment_outlined),
-        // style: TextButton.styleFrom(
-        //     foregroundColor: Theme.of(context).colorScheme.secondary),
+        style: TextButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.inverseSurface),
       ),
     );
   }

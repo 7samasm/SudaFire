@@ -21,7 +21,7 @@ class SearchResult extends StatefulWidget {
 final orderValues = ['desc', 'asc'];
 
 class _SearchResultState extends State<SearchResult> {
-  String _sort = 'date';
+  String _sort = 'price';
   String _order = orderValues[0];
   // ignore: prefer_function_declarations_over_variables
   late Stream<QuerySnapshot<Map<String, dynamic>>> searchStreem;
@@ -75,7 +75,7 @@ class _SearchResultState extends State<SearchResult> {
                         ) {
                           return MaterialDialog(
                             title: 'Sort',
-                            passButton: TextButton.icon(
+                            action: TextButton.icon(
                               onPressed: () {
                                 print(_order);
                                 print(_sort);
@@ -89,8 +89,7 @@ class _SearchResultState extends State<SearchResult> {
                                         .where('title',
                                             isLessThanOrEqualTo:
                                                 '${widget.query}\uf8ff')
-                                        .orderBy('title',
-                                            descending: _order == 'desc')
+                                        .orderBy('title')
                                         .orderBy(_sort,
                                             descending: _order == 'desc')
                                         .snapshots();
@@ -99,6 +98,10 @@ class _SearchResultState extends State<SearchResult> {
                               },
                               icon: const Icon(Icons.check_circle_outline),
                               label: const Text('ok'),
+                              style: TextButton.styleFrom(
+                                  foregroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .inverseSurface),
                             ),
                             content: Column(
                               children: [
@@ -118,11 +121,9 @@ class _SearchResultState extends State<SearchResult> {
                                             style: BorderStyle.none,
                                           ),
                                         ),
-                                        initialSelection: 'date',
+                                        initialSelection: _sort,
                                         onSelected: (value) {
-                                          setState(() {
-                                            _sort = value!;
-                                          });
+                                          _sort = value!;
                                         },
                                         dropdownMenuEntries: const [
                                           DropdownMenuEntry(
@@ -145,9 +146,7 @@ class _SearchResultState extends State<SearchResult> {
                                 Expanded(
                                   child: SortRadioGroup(
                                     onChange: (v) {
-                                      setState(() {
-                                        _order = orderValues[v];
-                                      });
+                                      _order = orderValues[v];
                                     },
                                   ),
                                 ),
