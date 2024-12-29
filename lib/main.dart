@@ -44,13 +44,20 @@ class MyApp extends StatelessWidget {
         switchTheme: const SwitchThemeData(
           thumbColor: MaterialStatePropertyAll(Colors.cyan),
         ),
+        appBarTheme: const AppBarTheme().copyWith(
+          backgroundColor: const Color.fromARGB(255, 48, 48, 48),
+        ),
       );
       if (!ref.read(themeModeProvider.notifier).isDark) {
         theme = ThemeData().copyWith(
           colorScheme: kcolorScheme,
           appBarTheme: const AppBarTheme().copyWith(
-            backgroundColor: kcolorScheme.background,
-            foregroundColor: kcolorScheme.primary,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: const ButtonStyle().copyWith(
+              foregroundColor: const MaterialStatePropertyAll(Colors.black),
+            ),
           ),
           useMaterial3: true,
         );

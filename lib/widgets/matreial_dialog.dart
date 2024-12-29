@@ -24,7 +24,7 @@ class MaterialDialog extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
           width: double.maxFinite,
-          height: 380,
+          height: 350,
           child: Card(
             child: Column(
               children: [

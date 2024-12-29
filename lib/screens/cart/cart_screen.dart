@@ -38,7 +38,10 @@ class CartScreen extends ConsumerWidget {
                     TextSpan(
                       text: '\$${_getTotalPrice(cartItems)}',
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            // color: Colors.black54,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .inverseSurface
+                                .withOpacity(0.8),
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -64,9 +67,6 @@ class CartScreen extends ConsumerWidget {
                 },
                 label: const Text('order'),
                 icon: const Icon(Icons.add_task),
-                style: TextButton.styleFrom(
-                  foregroundColor: Theme.of(context).colorScheme.secondary,
-                ),
               ),
               PopupMenuButton(
                 itemBuilder: (context) {

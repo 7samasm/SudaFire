@@ -98,10 +98,6 @@ class _SearchResultState extends State<SearchResult> {
                               },
                               icon: const Icon(Icons.check_circle_outline),
                               label: const Text('ok'),
-                              style: TextButton.styleFrom(
-                                  foregroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .inverseSurface),
                             ),
                             content: Column(
                               children: [

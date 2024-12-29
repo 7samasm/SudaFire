@@ -46,7 +46,7 @@ class ProductItem extends StatelessWidget {
                 Align(
                   alignment: Alignment.topCenter,
                   child: Consumer(builder: (context, ref, child) {
-                    return IconButton.filledTonal(
+                    return IconButton(
                       style: const ButtonStyle().copyWith(
                         minimumSize: const MaterialStatePropertyAll(
                           Size.square(30),
@@ -106,7 +106,10 @@ class ProductItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       // color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
-                      // color: Colors.black54,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .inverseSurface
+                          .withOpacity(0.8),
                     ),
               ),
             ],

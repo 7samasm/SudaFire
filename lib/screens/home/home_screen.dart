@@ -30,8 +30,6 @@ final user = fireAuth.currentUser;
 AppBar _buildAppBar(BuildContext context) {
   print('_buildAppBar() called');
   return AppBar(
-    // backgroundColor:
-    // ref.read(themeModeProvider.notifier).isDark ? null : Colors.white,
     elevation: 0,
     actions: <Widget>[
       IconButton(

@@ -22,13 +22,16 @@ class CartSummary extends StatelessWidget {
       leadingTextActions: Text.rich(
         TextSpan(
           text: 'total\n',
-          style: Theme.of(context).textTheme.bodySmall,
+          style: Theme.of(context).textTheme.bodyMedium,
           // .copyWith(color: Colors.black54),
           children: [
             TextSpan(
               text: totalPrice.toStringAsFixed(2),
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    // color: Colors.black54,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .inverseSurface
+                        .withOpacity(0.8),
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -75,8 +78,6 @@ class CartSummary extends StatelessWidget {
         },
         label: const Text('pay'),
         icon: const Icon(Icons.payment_outlined),
-        style: TextButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.inverseSurface),
       ),
     );
   }

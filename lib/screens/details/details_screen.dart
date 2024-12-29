@@ -31,7 +31,7 @@ class DetailsScreen extends ConsumerWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.home),
+            icon: const Icon(Icons.home_outlined),
           ),
           Consumer(builder: (context, ref, _) {
             final favs = ref.watch(favoriteProvider);
@@ -41,9 +41,12 @@ class DetailsScreen extends ConsumerWidget {
                     .read(favoriteProvider.notifier)
                     .toggleFavoriteProduct(product);
               },
-              icon: Icon(favs.contains(product)
-                  ? Icons.favorite
-                  : Icons.favorite_border_outlined),
+              icon: favs.contains(product)
+                  ? Icon(
+                      Icons.favorite,
+                      color: Theme.of(context).colorScheme.secondary,
+                    )
+                  : const Icon(Icons.favorite_border_outlined),
             );
           }),
           Badge.count(

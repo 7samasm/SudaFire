@@ -123,13 +123,11 @@ class _ProductListHorizontalScrollState
                     children: [
                       TextSpan(
                         text: '$_totalResults',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  // color: Theme.of(context).colorScheme.secondary,
+                                ),
                       ),
                       const TextSpan(
                         text: ' results',
