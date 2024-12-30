@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -97,9 +98,9 @@ class _BodyState extends State<Body> {
             children: [
               TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  label: Text('title'),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  label: const Text('title').tr(),
+                  border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -114,9 +115,9 @@ class _BodyState extends State<Body> {
               const Gap(kDefaultPadding),
               TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  label: Text('description'),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  label: const Text('description').tr(),
+                  border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -137,9 +138,9 @@ class _BodyState extends State<Body> {
                     flex: 1,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        label: Text('price'),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        label: const Text('price').tr(),
+                        border: const OutlineInputBorder(),
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -166,7 +167,7 @@ class _BodyState extends State<Body> {
                           .map(
                             (category) => DropdownMenuItem(
                               value: category,
-                              child: Text(category),
+                              child: Text(category).tr(),
                             ),
                           )
                           .toList(),
@@ -189,7 +190,7 @@ class _BodyState extends State<Body> {
                 child: TextButton.icon(
                   onPressed: _isSaving ? null : _submit,
                   icon: const Icon(Icons.save_outlined),
-                  label: const Text('save'),
+                  label: const Text('save').tr(),
                 ),
               )
             ],

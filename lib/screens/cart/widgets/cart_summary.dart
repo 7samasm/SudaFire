@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_fire/widgets/matreial_dialog.dart';
 
@@ -18,10 +19,10 @@ class CartSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialDialog(
-      title: 'Summary',
+      title: 'Summary'.tr(),
       leadingTextActions: Text.rich(
         TextSpan(
-          text: 'total\n',
+          text: '${'total'.tr()}\n',
           style: Theme.of(context).textTheme.bodyMedium,
           // .copyWith(color: Colors.black54),
           children: [
@@ -76,7 +77,7 @@ class CartSummary extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pop();
         },
-        label: const Text('pay'),
+        label: const Text('pay').tr(),
         icon: const Icon(Icons.payment_outlined),
       ),
     );

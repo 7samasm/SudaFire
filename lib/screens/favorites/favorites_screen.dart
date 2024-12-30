@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/constans.dart';
@@ -11,7 +12,7 @@ class FavoritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('favoriets'),
+        title: const Text('favorites').tr(),
       ),
       body: Consumer(builder: (context, ref, _) {
         final favs = ref.watch(favoriteProvider);

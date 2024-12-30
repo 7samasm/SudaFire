@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+// import 'dart:ui' as ui;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +22,12 @@ class HomeScreen extends StatelessWidget {
       appBar: _buildAppBar(context),
       drawer: const CustomDrawer(),
       body: const Body(),
+      // body: Directionality(
+      //   textDirection: context.locale.languageCode == 'ar'
+      //       ? ui.TextDirection.rtl
+      //       : ui.TextDirection.ltr,
+      //   child: const Body(),
+      // ),
     );
   }
 }
@@ -44,7 +52,9 @@ AppBar _buildAppBar(BuildContext context) {
           final totalCartItems = ref.watch(cartLengthProvider);
           return Badge.count(
             count: totalCartItems,
-            offset: const Offset(-3, 0),
+            offset: context.locale.languageCode == 'ar'
+                ? const Offset(2, 0)
+                : const Offset(-3, 0),
             isLabelVisible: totalCartItems >= 1,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             child: IconButton(
@@ -92,7 +102,7 @@ class CustomDrawer extends StatelessWidget {
             dense: true,
             style: ListTileStyle.drawer,
             leading: const Icon(Icons.add),
-            title: const Text('add product'),
+            title: const Text('add product').tr(),
             onTap: () {
               closeDrawer(context);
               Navigator.of(context).push(
@@ -117,7 +127,7 @@ class CustomDrawer extends StatelessWidget {
                 );
               },
             ),
-            title: const Text('cart'),
+            title: const Text('cart').tr(),
             onTap: () {
               closeDrawer(context);
               Navigator.of(context).push(
@@ -131,7 +141,7 @@ class CustomDrawer extends StatelessWidget {
             dense: true,
             style: ListTileStyle.drawer,
             leading: const Icon(Icons.favorite_outline),
-            title: const Text('favorites'),
+            title: const Text('favorites').tr(),
             onTap: () {
               closeDrawer(context);
               Navigator.of(context).push(
@@ -145,7 +155,7 @@ class CustomDrawer extends StatelessWidget {
             dense: true,
             style: ListTileStyle.drawer,
             leading: const Icon(Icons.exit_to_app),
-            title: const Text('log out'),
+            title: const Text('log out').tr(),
             onTap: () {
               fireAuth.signOut();
             },
@@ -157,7 +167,7 @@ class CustomDrawer extends StatelessWidget {
               return SwitchListTile.adaptive(
                 dense: true,
                 secondary: const Icon(Icons.dark_mode_outlined),
-                title: const Text('dark mode'),
+                title: const Text('dark mode').tr(),
                 value: themeNotifier.isDark,
                 onChanged: (v) {
                   ref
@@ -166,6 +176,20 @@ class CustomDrawer extends StatelessWidget {
                   themeNotifier.toggleMode();
                 },
               );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.translate_outlined),
+            title: const Text('arabic').tr(),
+            onTap: () {
+              context.setLocale(const Locale('ar'));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.translate_outlined),
+            title: const Text('english').tr(),
+            onTap: () {
+              context.setLocale(const Locale('en'));
             },
           ),
         ],

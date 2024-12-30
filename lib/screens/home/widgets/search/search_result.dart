@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_fire/constans.dart';
 import 'package:shop_fire/models/product/product.dart';
@@ -61,7 +62,7 @@ class _SearchResultState extends State<SearchResult> {
                   Text(
                     'sort result',
                     style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                  ).tr(),
                   const Spacer(),
                   IconButton(
                     onPressed: () {
@@ -74,7 +75,7 @@ class _SearchResultState extends State<SearchResult> {
                           secondaryAnimation,
                         ) {
                           return MaterialDialog(
-                            title: 'Sort',
+                            title: 'Sort'.tr(),
                             action: TextButton.icon(
                               onPressed: () {
                                 print(_order);
@@ -97,7 +98,7 @@ class _SearchResultState extends State<SearchResult> {
                                 );
                               },
                               icon: const Icon(Icons.check_circle_outline),
-                              label: const Text('ok'),
+                              label: const Text('ok').tr(),
                             ),
                             content: Column(
                               children: [
@@ -107,7 +108,7 @@ class _SearchResultState extends State<SearchResult> {
                                   ),
                                   child: Row(
                                     children: [
-                                      const Text('sort by'),
+                                      const Text('sort by').tr(),
                                       const Spacer(),
                                       DropdownMenu(
                                         width: 120,
@@ -121,18 +122,18 @@ class _SearchResultState extends State<SearchResult> {
                                         onSelected: (value) {
                                           _sort = value!;
                                         },
-                                        dropdownMenuEntries: const [
+                                        dropdownMenuEntries: [
                                           DropdownMenuEntry(
                                             value: 'title',
-                                            label: 'alphabet',
+                                            label: 'alphabet'.tr(),
                                           ),
                                           DropdownMenuEntry(
                                             value: 'price',
-                                            label: 'price',
+                                            label: 'price'.tr(),
                                           ),
                                           DropdownMenuEntry(
                                             value: 'date',
-                                            label: 'date',
+                                            label: 'date'.tr(),
                                           ),
                                         ],
                                       ),

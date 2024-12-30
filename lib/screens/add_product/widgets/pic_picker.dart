@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -36,7 +37,7 @@ class _PicPickerState extends State<PicPicker> {
         TextButton.icon(
           onPressed: _pickImage,
           icon: const Icon(Icons.add_a_photo_outlined),
-          label: const Text('add a photo'),
+          label: const Text('add a photo').tr(),
         ),
         const Spacer(),
         CircleAvatar(

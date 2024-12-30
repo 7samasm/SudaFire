@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:shop_fire/models/product/product.dart';
@@ -38,7 +39,7 @@ class Body extends StatelessWidget {
                     children: [
                       Text.rich(
                         TextSpan(
-                          text: 'price\n',
+                          text: '${'price'.tr()}\n',
                           style: Theme.of(context).textTheme.bodyLarge,
                           children: [
                             TextSpan(
@@ -53,7 +54,7 @@ class Body extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'choose a color',
+                            'choose a color'.tr(),
                             style: Theme.of(context).textTheme.labelLarge,
                           ),
                           const Gap(10),
@@ -63,15 +64,16 @@ class Body extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Gap(kDefaultPadding),
+                const Gap(kDefaultPadding * 3.5),
                 ProductListHorizontalScroll(
                   category: 'laptops',
-                  title: 'see also',
+                  title: 'see also'.tr(),
                   pageTitle: product.title,
                 ),
+                const Gap(kDefaultPadding * 2.5),
                 ProductListHorizontalScroll(
                   category: 'phones',
-                  title: 'related',
+                  title: 'related'.tr(),
                   pageTitle: product.title,
                 ),
               ],

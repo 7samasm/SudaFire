@@ -1,4 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:shop_fire/constans.dart';
 import '../../../widgets/product_list_horizon_scroll/product_list_horizontal_scroll.dart';
 
 class Body extends StatelessWidget {
@@ -8,7 +11,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Padding(
@@ -22,14 +25,27 @@ class Body extends StatelessWidget {
         //   ),
         // ),
         // const CategoriesList(),
-        SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProductListHorizontalScroll(
-                  category: 'laptops', title: 'laptops'),
-              ProductListHorizontalScroll(category: 'phones', title: 'phones'),
-            ],
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProductListHorizontalScroll(
+                  category: 'laptops',
+                  title: 'laptops'.tr(),
+                ),
+                const Gap(kDefaultPadding * 2.5),
+                ProductListHorizontalScroll(
+                  category: 'phones',
+                  title: 'phones'.tr(),
+                ),
+                const Gap(kDefaultPadding * 2.5),
+                ProductListHorizontalScroll(
+                  category: 'clothes',
+                  title: 'clothes'.tr(),
+                ),
+              ],
+            ),
           ),
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/constans.dart';
@@ -32,7 +33,7 @@ class CartScreen extends ConsumerWidget {
             children: [
               Text.rich(
                 TextSpan(
-                  text: 'total\n',
+                  text: '${'total'.tr()}\n',
                   style: Theme.of(context).textTheme.bodyLarge,
                   children: [
                     TextSpan(
@@ -65,7 +66,7 @@ class CartScreen extends ConsumerWidget {
                     ),
                   );
                 },
-                label: const Text('order'),
+                label: const Text('order').tr(),
                 icon: const Icon(Icons.add_task),
               ),
               PopupMenuButton(
@@ -76,10 +77,10 @@ class CartScreen extends ConsumerWidget {
                       onTap: () {
                         ref.read(cartProvider.notifier).clearCartItems();
                       },
-                      child: const ListTile(
+                      child: ListTile(
                         dense: true,
-                        leading: Icon(Icons.delete_forever_outlined),
-                        title: Text('delete all'),
+                        leading: const Icon(Icons.delete_forever_outlined),
+                        title: const Text('delete all').tr(),
                       ),
                     ),
                   ];
@@ -114,7 +115,7 @@ class CartScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cart'),
+        title: const Text('Cart').tr(),
       ),
       body: content,
     );

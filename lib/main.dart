@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,9 +19,15 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await EasyLocalization.ensureInitialized();
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    EasyLocalization(
+      path: 'assets/translations',
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      fallbackLocale: const Locale('en'),
+      child: const ProviderScope(
+        child: MyApp(),
+      ),
     ),
   );
 }
@@ -66,6 +73,10 @@ class MyApp extends StatelessWidget {
         title: 'shop',
         debugShowCheckedModeBanner: false,
         theme: theme,
+        // Integrate localization
+        locale: context.locale,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {

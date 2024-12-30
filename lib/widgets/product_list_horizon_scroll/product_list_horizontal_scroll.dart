@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/providers/fire_source_provider.dart';
@@ -63,11 +64,12 @@ class _ProductListHorizontalScrollState
       // get total count before limit  from query above
       var count =
           await query.get(GetOptions(source: ref.read(fireSourcProvider)));
-      if (mounted) {
-        setState(() {
-          _totalResults = count.size;
-        });
-      }
+      _totalResults = count.size;
+      // if (mounted) {
+      //   setState(() {
+      //     _totalResults = count.size;
+      //   });
+      // }
       // get first result or next page depending on last doc exitence
       query = _lastDocument != null
           ? query.startAfterDocument(_lastDocument!).limit(kPageSize)
@@ -106,7 +108,9 @@ class _ProductListHorizontalScrollState
   Widget build(BuildContext context) {
     // print([..._products, 'zzz']);
     return Padding(
-      padding: const EdgeInsets.only(left: kDefaultPadding),
+      padding: context.locale.languageCode == 'ar'
+          ? const EdgeInsets.only(right: kDefaultPadding)
+          : const EdgeInsets.only(left: kDefaultPadding),
       child: _products.isNotEmpty
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,26 +119,25 @@ class _ProductListHorizontalScrollState
                   widget.title,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyLarge!
-                      .copyWith(height: 3),
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '$_totalResults',
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  // color: Theme.of(context).colorScheme.secondary,
-                                ),
-                      ),
-                      const TextSpan(
-                        text: ' results',
-                      ),
-                    ],
-                  ),
-                ),
+                // Text.rich(
+                //   TextSpan(
+                //     children: [
+                //       TextSpan(
+                //         text: '$_totalResults ',
+                //         style: Theme.of(context)
+                //             .textTheme
+                //             .titleMedium!
+                //             .copyWith(fontWeight: FontWeight.bold),
+                //       ),
+                //       TextSpan(
+                //         text: 'results'.tr(),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: 220,
                   child: NotificationListener<ScrollEndNotification>(

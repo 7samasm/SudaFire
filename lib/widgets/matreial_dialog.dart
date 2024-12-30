@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_fire/constans.dart';
 
@@ -57,7 +58,9 @@ class MaterialDialog extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: Alignment.topRight,
+                        alignment: context.locale.languageCode == 'ar'
+                            ? Alignment.topLeft
+                            : Alignment.topRight,
                         child: IconButton(
                           onPressed: () {
                             Navigator.of(context).pop();

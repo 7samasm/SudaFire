@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SortRadioGroup extends StatefulWidget {
@@ -33,9 +34,9 @@ class _SortRadioGroupState extends State<SortRadioGroup> with RestorationMixin {
       children: [
         RadioListTile(
           value: 0,
-          title: const Text('descinding'),
+          title: const Text('descending').tr(),
           groupValue: sortRadioValue.value,
-          secondary: const Icon(Icons.arrow_circle_down),
+          secondary: const Icon(Icons.arrow_drop_down_outlined),
           controlAffinity: ListTileControlAffinity.trailing,
           onChanged: (v) {
             _changeSortRadio(v!);
@@ -43,9 +44,9 @@ class _SortRadioGroupState extends State<SortRadioGroup> with RestorationMixin {
         ),
         RadioListTile(
           value: 1,
-          title: const Text('ascinding'),
+          title: const Text('ascending').tr(),
           groupValue: sortRadioValue.value,
-          secondary: const Icon(Icons.arrow_circle_up),
+          secondary: const Icon(Icons.arrow_drop_up_outlined),
           controlAffinity: ListTileControlAffinity.trailing,
           onChanged: (v) {
             _changeSortRadio(v!);
