@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/models/product/product.dart';
@@ -51,7 +52,9 @@ class DetailsScreen extends ConsumerWidget {
           }),
           Badge.count(
             count: totalItems,
-            offset: const Offset(-3, 0),
+            offset: context.locale.languageCode == 'ar'
+                ? const Offset(2, 0)
+                : const Offset(-3, 0),
             backgroundColor: Theme.of(context).colorScheme.secondary,
             isLabelVisible: totalItems >= 1,
             child: IconButton(
@@ -59,6 +62,7 @@ class DetailsScreen extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
+                    maintainState: false,
                     builder: (context) => const CartScreen(),
                   ),
                 );

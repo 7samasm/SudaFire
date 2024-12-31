@@ -33,5 +33,7 @@
   "title": "title",
   "description": "description",
   "add a photo": "add a photo",
-  "save": "save"
+  "save": "save",
+  "settings": "settings",
+  "language": "language"
 }

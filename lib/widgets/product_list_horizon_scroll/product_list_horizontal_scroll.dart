@@ -117,10 +117,13 @@ class _ProductListHorizontalScrollState
               children: [
                 Text(
                   widget.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .inverseSurface
+                            .withOpacity(0.75),
+                      ),
                 ),
                 // Text.rich(
                 //   TextSpan(

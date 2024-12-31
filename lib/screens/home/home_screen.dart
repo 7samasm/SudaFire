@@ -3,13 +3,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop_fire/providers/fire_source_provider.dart';
-import 'package:shop_fire/providers/theme_mode_provider.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/cart/cart_screen.dart';
 import 'package:shop_fire/screens/favorites/favorites_screen.dart';
 import 'package:shop_fire/screens/home/widgets/body.dart';
 import 'package:shop_fire/screens/home/widgets/search/custom_search_delegate.dart';
+import 'package:shop_fire/screens/settings/settings_screen.dart';
 
 import '../add_product/add_product_screen.dart';
 
@@ -62,6 +61,7 @@ AppBar _buildAppBar(BuildContext context) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
+                    maintainState: false,
                     builder: (ctx) => const CartScreen(),
                   ),
                 );
@@ -132,6 +132,7 @@ class CustomDrawer extends StatelessWidget {
               closeDrawer(context);
               Navigator.of(context).push(
                 MaterialPageRoute(
+                  maintainState: false,
                   builder: (context) => const CartScreen(),
                 ),
               );
@@ -154,42 +155,24 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             dense: true,
             style: ListTileStyle.drawer,
-            leading: const Icon(Icons.exit_to_app),
-            title: const Text('log out').tr(),
+            leading: const Icon(Icons.settings_outlined),
+            title: const Text('settings').tr(),
             onTap: () {
-              fireAuth.signOut();
-            },
-          ),
-          Consumer(
-            builder: (context, ref, child) {
-              ref.watch(themeModeProvider);
-              final themeNotifier = ref.read(themeModeProvider.notifier);
-              return SwitchListTile.adaptive(
-                dense: true,
-                secondary: const Icon(Icons.dark_mode_outlined),
-                title: const Text('dark mode').tr(),
-                value: themeNotifier.isDark,
-                onChanged: (v) {
-                  ref
-                      .read(fireSourcProvider.notifier)
-                      .changeSourceToCacheAndRevertAfterAwhile();
-                  themeNotifier.toggleMode();
-                },
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  maintainState: false,
+                  builder: (context) => const SettingsScreen(),
+                ),
               );
             },
           ),
           ListTile(
-            leading: const Icon(Icons.translate_outlined),
-            title: const Text('arabic').tr(),
+            dense: true,
+            style: ListTileStyle.drawer,
+            leading: const Icon(Icons.exit_to_app),
+            title: const Text('log out').tr(),
             onTap: () {
-              context.setLocale(const Locale('ar'));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.translate_outlined),
-            title: const Text('english').tr(),
-            onTap: () {
-              context.setLocale(const Locale('en'));
+              fireAuth.signOut();
             },
           ),
         ],
