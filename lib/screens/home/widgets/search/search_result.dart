@@ -78,24 +78,7 @@ class _SearchResultState extends State<SearchResult> {
                             title: 'Sort'.tr(),
                             action: TextButton.icon(
                               onPressed: () {
-                                print(_order);
-                                print(_sort);
-                                setState(
-                                  () {
-                                    searchStreem = FirebaseFirestore.instance
-                                        .collection('products')
-                                        .where('title',
-                                            isGreaterThanOrEqualTo:
-                                                widget.query)
-                                        .where('title',
-                                            isLessThanOrEqualTo:
-                                                '${widget.query}\uf8ff')
-                                        .orderBy('title')
-                                        .orderBy(_sort,
-                                            descending: _order == 'desc')
-                                        .snapshots();
-                                  },
-                                );
+                                sort(context);
                               },
                               icon: const Icon(Icons.check_circle_outline),
                               label: const Text('ok').tr(),
@@ -183,5 +166,22 @@ class _SearchResultState extends State<SearchResult> {
         );
       },
     );
+  }
+
+  void sort(BuildContext ctx) {
+    print(_order);
+    print(_sort);
+    setState(
+      () {
+        searchStreem = FirebaseFirestore.instance
+            .collection('products')
+            .where('title', isGreaterThanOrEqualTo: widget.query)
+            .where('title', isLessThanOrEqualTo: '${widget.query}\uf8ff')
+            .orderBy('title', descending: _order == 'desc')
+            .orderBy(_sort, descending: _order == 'desc')
+            .snapshots(includeMetadataChanges: true);
+      },
+    );
+    // Navigator.pop(ctx);
   }
 }

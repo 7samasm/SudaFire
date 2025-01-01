@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_fire/constans.dart';
@@ -90,9 +91,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         TextFormField(
                           key: UniqueKey(),
                           keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            labelText: 'email',
-                            border: OutlineInputBorder(
+                          decoration: InputDecoration(
+                            labelText: 'email'.tr(),
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(kDefaultPadding * 2),
                               ),
@@ -105,7 +106,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             if (value == null ||
                                 value.trim().isEmpty ||
                                 !value.contains('@')) {
-                              return 'please enter a valid email';
+                              return 'err_msg_email'.tr();
                             }
                             return null;
                           },
@@ -115,9 +116,9 @@ class _AuthScreenState extends State<AuthScreen> {
                           TextFormField(
                             key: UniqueKey(),
                             keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                              labelText: 'username',
-                              border: OutlineInputBorder(
+                            decoration: InputDecoration(
+                              labelText: 'username'.tr(),
+                              border: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(kDefaultPadding * 2),
                                 ),
@@ -128,7 +129,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             },
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'please enter username';
+                                return 'err_msg_un'.tr();
                               }
                               return null;
                             },
@@ -137,9 +138,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         const SizedBox(height: kDefaultPadding - 5),
                         TextFormField(
                           key: UniqueKey(),
-                          decoration: const InputDecoration(
-                            labelText: 'password',
-                            border: OutlineInputBorder(
+                          decoration: InputDecoration(
+                            labelText: 'password'.tr(),
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(kDefaultPadding * 2),
                               ),
@@ -151,7 +152,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           },
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
-                              return 'please enter a password';
+                              return 'err_msg_pw'.tr();
                             }
                             return null;
                           },
@@ -169,7 +170,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           onPressed: _isAuthenticating ? null : _submit,
                           icon: const Icon(Icons.login),
-                          label: Text(_isLogin ? 'login' : 'signup'),
+                          label: Text(_isLogin ? 'login' : 'sign up').tr(),
                         ),
                         const SizedBox(height: kDefaultPadding - 5),
                         TextButton(
@@ -180,10 +181,8 @@ class _AuthScreenState extends State<AuthScreen> {
                             _form.currentState!.reset();
                           },
                           child: Text(
-                            _isLogin
-                                ? 'sign up if you don\'t have account'
-                                : 'login up if you\'ve account',
-                          ),
+                            _isLogin ? 'sign up hint' : 'login hint',
+                          ).tr(),
                         ),
                       ],
                     ),

@@ -35,5 +35,15 @@
   "add a photo": "add a photo",
   "save": "save",
   "settings": "settings",
-  "language": "language"
+  "language": "language",
+  "email": "email",
+  "username": "username",
+  "password": "password",
+  "login": "login",
+  "sign up": "sign up",
+  "login hint": "login if you have an account",
+  "sign up hint": "sign up if you don't have an account",
+  "err_msg_email": "please enter a valid email",
+  "err_msg_un": "please enter a valid username",
+  "err_msg_pw": "please enter a valid password"
 }
