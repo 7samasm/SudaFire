@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_fire/models/product/product.dart';
 import 'package:shop_fire/providers/favorite_provider.dart';
+import 'package:shop_fire/screens/cart/cart_screen.dart';
 import 'package:shop_fire/screens/cart/providers/cart_provider.dart';
 import 'package:shop_fire/screens/details/widgets/body.dart';
 import 'package:shop_fire/screens/home/home_screen.dart';
-
-import '../cart/cart_screen.dart';
 
 class DetailsScreen extends ConsumerWidget {
   const DetailsScreen({

@@ -41,6 +41,8 @@ class Body extends StatelessWidget {
                             value: context.locale.languageCode ==
                                 local.languageCode,
                             title: Text(languages[local.languageCode]!),
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
                             onChanged: (value) {
                               context.setLocale(local);
                             },
