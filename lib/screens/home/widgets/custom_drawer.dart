@@ -24,6 +24,16 @@ class CustomDrawer extends StatelessWidget {
           DrawerHeader(
             padding: const EdgeInsets.all(0),
             child: UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
+                  colors: [
+                    Theme.of(context).colorScheme.primary,
+                    Theme.of(context).colorScheme.secondary,
+                  ],
+                ),
+              ),
               margin: const EdgeInsets.only(bottom: 0),
               accountName: Text(user?.displayName ?? 'null'),
               accountEmail: Text('${user?.email}'),

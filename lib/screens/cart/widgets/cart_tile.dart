@@ -39,7 +39,8 @@ class CartTile extends ConsumerWidget {
     return ListTile(
       selected: selected,
       selectedColor: Theme.of(context).colorScheme.inverseSurface,
-      selectedTileColor: Colors.grey.shade300,
+      selectedTileColor:
+          Theme.of(context).colorScheme.inverseSurface.withOpacity(0.2),
       onLongPress: () {
         ref.read(seclectionProvider.notifier).toggle(cartItem);
       },
