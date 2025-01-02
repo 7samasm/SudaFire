@@ -21,6 +21,7 @@ CartItem _$CartItemFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CartItem {
   int get quantity => throw _privateConstructorUsedError;
+  int? get listKeyIndex => throw _privateConstructorUsedError;
   Product get product => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +35,7 @@ abstract class $CartItemCopyWith<$Res> {
   factory $CartItemCopyWith(CartItem value, $Res Function(CartItem) then) =
       _$CartItemCopyWithImpl<$Res, CartItem>;
   @useResult
-  $Res call({int quantity, Product product});
+  $Res call({int quantity, int? listKeyIndex, Product product});
 
   $ProductCopyWith<$Res> get product;
 }
@@ -53,6 +54,7 @@ class _$CartItemCopyWithImpl<$Res, $Val extends CartItem>
   @override
   $Res call({
     Object? quantity = null,
+    Object? listKeyIndex = freezed,
     Object? product = null,
   }) {
     return _then(_value.copyWith(
@@ -60,6 +62,10 @@ class _$CartItemCopyWithImpl<$Res, $Val extends CartItem>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
+      listKeyIndex: freezed == listKeyIndex
+          ? _value.listKeyIndex
+          : listKeyIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
       product: null == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
@@ -84,7 +90,7 @@ abstract class _$$CartItemImplCopyWith<$Res>
       __$$CartItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int quantity, Product product});
+  $Res call({int quantity, int? listKeyIndex, Product product});
 
   @override
   $ProductCopyWith<$Res> get product;
@@ -102,6 +108,7 @@ class __$$CartItemImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? quantity = null,
+    Object? listKeyIndex = freezed,
     Object? product = null,
   }) {
     return _then(_$CartItemImpl(
@@ -109,6 +116,10 @@ class __$$CartItemImplCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
+      listKeyIndex: freezed == listKeyIndex
+          ? _value.listKeyIndex
+          : listKeyIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
       product: null == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
@@ -120,7 +131,8 @@ class __$$CartItemImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CartItemImpl extends _CartItem {
-  _$CartItemImpl({this.quantity = 1, required this.product}) : super._();
+  _$CartItemImpl({this.quantity = 1, this.listKeyIndex, required this.product})
+      : super._();
 
   factory _$CartItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$CartItemImplFromJson(json);
@@ -129,11 +141,13 @@ class _$CartItemImpl extends _CartItem {
   @JsonKey()
   final int quantity;
   @override
+  final int? listKeyIndex;
+  @override
   final Product product;
 
   @override
   String toString() {
-    return 'CartItem(quantity: $quantity, product: $product)';
+    return 'CartItem(quantity: $quantity, listKeyIndex: $listKeyIndex, product: $product)';
   }
 
   @override
@@ -143,12 +157,14 @@ class _$CartItemImpl extends _CartItem {
             other is _$CartItemImpl &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
+            (identical(other.listKeyIndex, listKeyIndex) ||
+                other.listKeyIndex == listKeyIndex) &&
             (identical(other.product, product) || other.product == product));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, quantity, product);
+  int get hashCode => Object.hash(runtimeType, quantity, listKeyIndex, product);
 
   @JsonKey(ignore: true)
   @override
@@ -165,8 +181,10 @@ class _$CartItemImpl extends _CartItem {
 }
 
 abstract class _CartItem extends CartItem {
-  factory _CartItem({final int quantity, required final Product product}) =
-      _$CartItemImpl;
+  factory _CartItem(
+      {final int quantity,
+      final int? listKeyIndex,
+      required final Product product}) = _$CartItemImpl;
   _CartItem._() : super._();
 
   factory _CartItem.fromJson(Map<String, dynamic> json) =
@@ -174,6 +192,8 @@ abstract class _CartItem extends CartItem {
 
   @override
   int get quantity;
+  @override
+  int? get listKeyIndex;
   @override
   Product get product;
   @override

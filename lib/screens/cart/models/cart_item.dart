@@ -11,6 +11,7 @@ class CartItem with _$CartItem {
   CartItem._();
   factory CartItem({
     @Default(1) int quantity,
+    int? listKeyIndex,
     required Product product,
   }) = _CartItem;
 

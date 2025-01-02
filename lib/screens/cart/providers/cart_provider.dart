@@ -109,6 +109,18 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     db.delete('cart_items');
     state = [];
   }
+
+  deleteMany(List<CartItem> items) async {
+    final db = await _getDataBase();
+    for (var item in items) {
+      db.delete(
+        'cart_items',
+        where: 'id == ?',
+        whereArgs: [item.product.id],
+      );
+    }
+    state = state.where((element) => !items.contains(element)).toList();
+  }
 }
 
 final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>(
