@@ -186,10 +186,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       TextSpan(
                         text: ' ${selectedItems.length}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
-                        children: const [
+                        children: [
                           TextSpan(
-                            text: ' items',
-                            style: TextStyle(
+                            text: ' ${'items'.tr()}',
+                            style: const TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
                           ),
@@ -204,10 +204,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     return [
                       PopupMenuItem(
                         padding: const EdgeInsets.all(0),
-                        child: const ListTile(
+                        child: ListTile(
                           dense: true,
-                          leading: Icon(Icons.select_all_outlined),
-                          title: Text('select all'),
+                          leading: const Icon(Icons.select_all_outlined),
+                          title: const Text('select_all').tr(),
                         ),
                         onTap: () {
                           ref.read(selectAllProvider)();
@@ -215,10 +215,11 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       ),
                       PopupMenuItem(
                         padding: const EdgeInsets.all(0),
-                        child: const ListTile(
+                        child: ListTile(
                           dense: true,
-                          leading: Icon(Icons.check_box_outline_blank_outlined),
-                          title: Text('un select all'),
+                          leading: const Icon(
+                              Icons.check_box_outline_blank_outlined),
+                          title: const Text('un_select_all').tr(),
                         ),
                         onTap: () {
                           ref.read(seclectionProvider.notifier).deleteAll();
@@ -226,10 +227,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       ),
                       PopupMenuItem(
                         padding: const EdgeInsets.all(0),
-                        child: const ListTile(
+                        child: ListTile(
                           dense: true,
-                          leading: Icon(Icons.delete_outline),
-                          title: Text('delete'),
+                          leading: const Icon(Icons.delete_outline),
+                          title: const Text('delete').tr(),
                         ),
                         onTap: () {
                           handlePopupDeleteTap();
