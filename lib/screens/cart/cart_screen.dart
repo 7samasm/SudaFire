@@ -173,94 +173,68 @@ class _CartScreenState extends ConsumerState<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cart').tr(),
-        actions: [
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            switchInCurve: Curves.easeIn,
-            switchOutCurve: Curves.easeOut,
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-
-            child: ref.watch(selectionIsNotEmptyProvider)
-                ? Row(
-                    key: ValueKey<int>(ref.read(selectionLengthProvider)),
-                    children: [
-                      const Icon(
-                        Icons.check,
-                        // color: Theme.of(context).colorScheme.secondary,
+        title: ref.watch(selectionIsNotEmptyProvider)
+            ? Text.rich(
+                TextSpan(
+                  text: '${ref.watch(selectionLengthProvider)}',
+                  style: const TextStyle(
+                      // color: Theme.of(context).colorScheme.secondary,
                       ),
-                      Text.rich(
-                        TextSpan(
-                          text: '${ref.watch(selectionLengthProvider)}',
-                          style: const TextStyle(
-                              // color: Theme.of(context).colorScheme.secondary,
-                              ),
-                          children: [
-                            TextSpan(
-                              text: ' ${'items'.tr()}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
+                  children: [
+                    TextSpan(
+                      text: ' ${'items'.tr()}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : const Text('Cart').tr(),
+        actions: ref.watch(selectionIsNotEmptyProvider)
+            ? [
+                IconButton(
+                  onPressed: handleDeleteSelections,
+                  icon: const Icon(Icons.delete_outline),
+                ),
+                PopupMenuButton(
+                  padding: const EdgeInsets.all(8),
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        padding: const EdgeInsets.all(0),
+                        child: ListTile(
+                          dense: true,
+                          leading: const Icon(Icons.select_all_outlined),
+                          title: const Text('select_all').tr(),
                         ),
-                      ),
-                      PopupMenuButton(
-                        padding: const EdgeInsets.all(8),
-                        itemBuilder: (context) {
-                          return [
-                            PopupMenuItem(
-                              padding: const EdgeInsets.all(0),
-                              child: ListTile(
-                                dense: true,
-                                leading: const Icon(Icons.select_all_outlined),
-                                title: const Text('select_all').tr(),
-                              ),
-                              onTap: () {
-                                ref.read(selectAllProvider)();
-                              },
-                            ),
-                            PopupMenuItem(
-                              padding: const EdgeInsets.all(0),
-                              child: ListTile(
-                                dense: true,
-                                leading: const Icon(
-                                    Icons.check_box_outline_blank_outlined),
-                                title: const Text('un_select_all').tr(),
-                              ),
-                              onTap: () {
-                                ref
-                                    .read(selectionProvider.notifier)
-                                    .deleteAll();
-                              },
-                            ),
-                            PopupMenuItem(
-                              padding: const EdgeInsets.all(0),
-                              child: ListTile(
-                                dense: true,
-                                leading: const Icon(Icons.delete_outline),
-                                title: const Text('delete').tr(),
-                              ),
-                              onTap: () {
-                                handlePopupDeleteTap();
-                              },
-                            ),
-                          ];
+                        onTap: () {
+                          ref.read(selectAllProvider)();
                         },
                       ),
-                    ],
-                  )
-                : Container(), // Empty container when no items are selected
-          ),
-        ],
+                      PopupMenuItem(
+                        padding: const EdgeInsets.all(0),
+                        child: ListTile(
+                          dense: true,
+                          leading: const Icon(
+                              Icons.check_box_outline_blank_outlined),
+                          title: const Text('un_select_all').tr(),
+                        ),
+                        onTap: () {
+                          ref.read(selectionProvider.notifier).deleteAll();
+                        },
+                      ),
+                    ];
+                  },
+                ),
+              ]
+            : null,
       ),
       body: content,
     );
   }
 
-  void handlePopupDeleteTap() {
+  void handleDeleteSelections() {
     if (ref.read(selectionProvider).length == ref.read(cartProvider).length) {
       _listKey.currentState!.removeAllItems(
         (context, animation) {
