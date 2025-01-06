@@ -173,13 +173,17 @@ class _SearchResultState extends State<SearchResult> {
     print(_sort);
     setState(
       () {
-        searchStreem = FirebaseFirestore.instance
-            .collection('products')
-            .where('title', isGreaterThanOrEqualTo: widget.query)
-            .where('title', isLessThanOrEqualTo: '${widget.query}\uf8ff')
-            .orderBy('title', descending: _order == 'desc')
-            .orderBy(_sort, descending: _order == 'desc')
-            .snapshots(includeMetadataChanges: true);
+        try {
+          searchStreem = FirebaseFirestore.instance
+              .collection('products')
+              .where('title', isGreaterThanOrEqualTo: widget.query)
+              .where('title', isLessThanOrEqualTo: '${widget.query}\uf8ff')
+              .orderBy('title')
+              .orderBy(_sort, descending: _order == 'desc')
+              .snapshots(includeMetadataChanges: true);
+        } catch (e) {
+          print('Error: $e');
+        }
       },
     );
     // Navigator.pop(ctx);

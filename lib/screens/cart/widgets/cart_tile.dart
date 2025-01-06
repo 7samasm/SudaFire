@@ -19,8 +19,8 @@ class CartTile extends ConsumerWidget {
   final Function onCartItemRemoved;
 
   _hanldeListTileTap(BuildContext context, WidgetRef ref) {
-    if (ref.read(isSelectionProcessProvider)) {
-      ref.read(seclectionProvider.notifier).toggle(cartItem);
+    if (ref.watch(selectionIsNotEmptyProvider)) {
+      ref.read(selectionProvider.notifier).toggle(cartItem);
       return;
     }
     Navigator.of(context).push(
@@ -34,7 +34,7 @@ class CartTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selected = ref.watch(seclectionProvider).contains(cartItem);
+    final selected = ref.watch(selectionProvider).contains(cartItem);
     // print('CartTile called');
     return ListTile(
       selected: selected,
@@ -42,7 +42,7 @@ class CartTile extends ConsumerWidget {
       selectedTileColor:
           Theme.of(context).colorScheme.inverseSurface.withOpacity(0.2),
       onLongPress: () {
-        ref.read(seclectionProvider.notifier).toggle(cartItem);
+        ref.read(selectionProvider.notifier).toggle(cartItem);
       },
       onTap: () {
         _hanldeListTileTap(context, ref);

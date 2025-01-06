@@ -21,8 +21,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
   // input values
   var _enteredEmail = '';
-  var _enteredUsername = '';
   var _enteredPassword = '';
+  var _enteredUsername = '';
+  var _enteredUsernameOrEmail = '';
 
   void _submit() async {
     final isValid = _form.currentState!.validate();
@@ -36,11 +37,53 @@ class _AuthScreenState extends State<AuthScreen> {
         _isAuthenticating = true;
       });
       if (_isLogin) {
+        String email = _enteredUsernameOrEmail;
+        // Check if the input is a username
+        if (!_enteredUsernameOrEmail.contains('@')) {
+          // Query Firestore to get the email associated with the username
+          final usernameQuery = await FirebaseFirestore.instance
+              .collection('users')
+              .where('username', isEqualTo: _enteredUsernameOrEmail)
+              .get();
+          if (usernameQuery.docs.isEmpty) {
+            throw FirebaseAuthException(
+              code: 'user-not-found',
+              message: 'err_msg_un_not_exist'.tr(),
+            );
+          }
+          email = usernameQuery.docs.first['email'];
+        }
         await fireAuth.signInWithEmailAndPassword(
-          email: _enteredEmail,
+          email: email,
           password: _enteredPassword,
         );
       } else {
+        // Check if email already exists
+        final emailExists = await FirebaseFirestore.instance
+            .collection('users')
+            .where('email', isEqualTo: _enteredEmail)
+            .get();
+
+        if (emailExists.docs.isNotEmpty) {
+          throw FirebaseAuthException(
+            code: 'email-already-in-use',
+            message: 'err_msg_email_exist'.tr(),
+          );
+        }
+
+        // Check if username already exists
+        final usernameExists = await FirebaseFirestore.instance
+            .collection('users')
+            .where('username', isEqualTo: _enteredUsername)
+            .get();
+
+        if (usernameExists.docs.isNotEmpty) {
+          throw FirebaseAuthException(
+            code: 'username-already-in-use',
+            message: 'err_msg_un_exist'.tr(),
+          );
+        }
+
         final userCredential = await fireAuth.createUserWithEmailAndPassword(
           email: _enteredEmail,
           password: _enteredPassword,
@@ -58,10 +101,10 @@ class _AuthScreenState extends State<AuthScreen> {
       setState(() {
         _isAuthenticating = false;
       });
-      ScaffoldMessenger.of(context).clearSnackBars();
+      // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(e.message ?? 'faild to authenticate'),
+          content: Text(e.message ?? 'An error occurred. Please try again.'),
         ),
       );
     }
@@ -88,30 +131,52 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextFormField(
-                          key: UniqueKey(),
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: 'email'.tr(),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(kDefaultPadding * 2),
+                        if (_isLogin)
+                          TextFormField(
+                            key: UniqueKey(),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              labelText: 'un_or_email'.tr(),
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(kDefaultPadding * 2),
+                                ),
                               ),
                             ),
+                            onSaved: (value) {
+                              _enteredUsernameOrEmail = value!;
+                            },
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'err_msg_email'.tr();
+                              }
+                              return null;
+                            },
                           ),
-                          onSaved: (value) {
-                            _enteredEmail = value!;
-                          },
-                          validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !value.contains('@')) {
-                              return 'err_msg_email'.tr();
-                            }
-                            return null;
-                          },
-                        ),
                         if (!_isLogin) ...[
+                          TextFormField(
+                            key: UniqueKey(),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              labelText: 'email'.tr(),
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(kDefaultPadding * 2),
+                                ),
+                              ),
+                            ),
+                            onSaved: (value) {
+                              _enteredEmail = value!;
+                            },
+                            validator: (value) {
+                              if (value == null ||
+                                  value.trim().isEmpty ||
+                                  !value.contains('@')) {
+                                return 'err_msg_email'.tr();
+                              }
+                              return null;
+                            },
+                          ),
                           const SizedBox(height: kDefaultPadding - 5),
                           TextFormField(
                             key: UniqueKey(),

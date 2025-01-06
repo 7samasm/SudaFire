@@ -42,6 +42,7 @@
   "language": "language",
   "email": "email",
   "username": "username",
+  "un_or_email": "username or email",
   "password": "password",
   "login": "login",
   "sign up": "sign up",
@@ -49,5 +50,11 @@
   "sign up hint": "sign up if you don't have an account",
   "err_msg_email": "please enter a valid email",
   "err_msg_un": "please enter a valid username",
-  "err_msg_pw": "please enter a valid password"
+  "err_msg_pw": "please enter a valid password",
+  "err_msg_pw_length": "password must be at least 6 characters",
+  "err_msg_pw_match": "passwords don't match",
+  "err_msg_email_exist": "email already exists",
+  "err_msg_un_exist": "username already exists",
+  "err_msg_un_not_exist": "username doesn't exist",
+  "err_msg_login": "invalid email or password"
 }

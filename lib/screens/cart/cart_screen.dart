@@ -58,14 +58,14 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   // @override
   // void dispose() {
   //   // print('cart_screen disposed');
-  //   ref.read(seclectionProvider.notifier).deleteAll();
+  //   ref.read(selectionProvider.notifier).deleteAll();
   //   super.dispose();
   // }
 
   @override
   void initState() {
-    Future.delayed(const Duration(microseconds: 100)).then((value) {
-      ref.read(seclectionProvider.notifier).deleteAll();
+    Future.delayed(const Duration(microseconds: 10)).then((value) {
+      ref.read(selectionProvider.notifier).deleteAll();
     });
     super.initState();
   }
@@ -73,7 +73,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartItems = ref.watch(cartProvider);
-    final selectedItems = ref.watch(seclectionProvider);
+    final selectedItems = ref.read(selectionProvider);
     // print('CartScreen called');
 
     Widget content = Column(
@@ -174,80 +174,94 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart').tr(),
-        actions: selectedItems.isNotEmpty
-            ? [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.check,
-                      // color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        text: ' ${selectedItems.length}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                        children: [
-                          TextSpan(
-                            text: ' ${'items'.tr()}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.normal,
+        actions: [
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            switchInCurve: Curves.easeIn,
+            switchOutCurve: Curves.easeOut,
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+
+            child: ref.watch(selectionIsNotEmptyProvider)
+                ? Row(
+                    key: ValueKey<int>(ref.read(selectionLengthProvider)),
+                    children: [
+                      const Icon(
+                        Icons.check,
+                        // color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          text: '${ref.watch(selectionLengthProvider)}',
+                          style: const TextStyle(
+                              // color: Theme.of(context).colorScheme.secondary,
+                              ),
+                          children: [
+                            TextSpan(
+                              text: ' ${'items'.tr()}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                PopupMenuButton(
-                  padding: const EdgeInsets.all(8),
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        padding: const EdgeInsets.all(0),
-                        child: ListTile(
-                          dense: true,
-                          leading: const Icon(Icons.select_all_outlined),
-                          title: const Text('select_all').tr(),
+                          ],
                         ),
-                        onTap: () {
-                          ref.read(selectAllProvider)();
+                      ),
+                      PopupMenuButton(
+                        padding: const EdgeInsets.all(8),
+                        itemBuilder: (context) {
+                          return [
+                            PopupMenuItem(
+                              padding: const EdgeInsets.all(0),
+                              child: ListTile(
+                                dense: true,
+                                leading: const Icon(Icons.select_all_outlined),
+                                title: const Text('select_all').tr(),
+                              ),
+                              onTap: () {
+                                ref.read(selectAllProvider)();
+                              },
+                            ),
+                            PopupMenuItem(
+                              padding: const EdgeInsets.all(0),
+                              child: ListTile(
+                                dense: true,
+                                leading: const Icon(
+                                    Icons.check_box_outline_blank_outlined),
+                                title: const Text('un_select_all').tr(),
+                              ),
+                              onTap: () {
+                                ref
+                                    .read(selectionProvider.notifier)
+                                    .deleteAll();
+                              },
+                            ),
+                            PopupMenuItem(
+                              padding: const EdgeInsets.all(0),
+                              child: ListTile(
+                                dense: true,
+                                leading: const Icon(Icons.delete_outline),
+                                title: const Text('delete').tr(),
+                              ),
+                              onTap: () {
+                                handlePopupDeleteTap();
+                              },
+                            ),
+                          ];
                         },
                       ),
-                      PopupMenuItem(
-                        padding: const EdgeInsets.all(0),
-                        child: ListTile(
-                          dense: true,
-                          leading: const Icon(
-                              Icons.check_box_outline_blank_outlined),
-                          title: const Text('un_select_all').tr(),
-                        ),
-                        onTap: () {
-                          ref.read(seclectionProvider.notifier).deleteAll();
-                        },
-                      ),
-                      PopupMenuItem(
-                        padding: const EdgeInsets.all(0),
-                        child: ListTile(
-                          dense: true,
-                          leading: const Icon(Icons.delete_outline),
-                          title: const Text('delete').tr(),
-                        ),
-                        onTap: () {
-                          handlePopupDeleteTap();
-                        },
-                      ),
-                    ];
-                  },
-                ),
-              ]
-            : null,
+                    ],
+                  )
+                : Container(), // Empty container when no items are selected
+          ),
+        ],
       ),
       body: content,
     );
   }
 
   void handlePopupDeleteTap() {
-    if (ref.read(seclectionProvider).length == ref.read(cartProvider).length) {
+    if (ref.read(selectionProvider).length == ref.read(cartProvider).length) {
       _listKey.currentState!.removeAllItems(
         (context, animation) {
           return OverlayPortal(
@@ -260,7 +274,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
       );
       ref.read(cartProvider.notifier).clearCartItems();
     } else {
-      for (var i = 0; i < ref.read(seclectionProvider).length; i++) {
+      for (var i = 0; i < ref.read(selectionProvider).length; i++) {
         _listKey.currentState!.removeItem(i, (context, animation) {
           return OverlayPortal(
             controller: OverlayPortalController(),
