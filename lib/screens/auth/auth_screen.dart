@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_fire/constans.dart';
+import 'package:shop_fire/screens/auth/sign-up/sign_up_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -16,16 +17,13 @@ final fireAuth = FirebaseAuth.instance;
 
 class _AuthScreenState extends State<AuthScreen> {
   final _form = GlobalKey<FormState>();
-  bool _isLogin = true;
   bool _isAuthenticating = false;
 
   // input values
-  var _enteredEmail = '';
   var _enteredPassword = '';
-  var _enteredUsername = '';
   var _enteredUsernameOrEmail = '';
 
-  void _submit() async {
+  void _logIn() async {
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
@@ -36,67 +34,27 @@ class _AuthScreenState extends State<AuthScreen> {
       setState(() {
         _isAuthenticating = true;
       });
-      if (_isLogin) {
-        String email = _enteredUsernameOrEmail;
-        // Check if the input is a username
-        if (!_enteredUsernameOrEmail.contains('@')) {
-          // Query Firestore to get the email associated with the username
-          final usernameQuery = await FirebaseFirestore.instance
-              .collection('users')
-              .where('username', isEqualTo: _enteredUsernameOrEmail)
-              .get();
-          if (usernameQuery.docs.isEmpty) {
-            throw FirebaseAuthException(
-              code: 'user-not-found',
-              message: 'err_msg_un_not_exist'.tr(),
-            );
-          }
-          email = usernameQuery.docs.first['email'];
-        }
-        await fireAuth.signInWithEmailAndPassword(
-          email: email,
-          password: _enteredPassword,
-        );
-      } else {
-        // Check if email already exists
-        final emailExists = await FirebaseFirestore.instance
-            .collection('users')
-            .where('email', isEqualTo: _enteredEmail)
-            .get();
 
-        if (emailExists.docs.isNotEmpty) {
+      String email = _enteredUsernameOrEmail;
+      // Check if the input is a username
+      if (!_enteredUsernameOrEmail.contains('@')) {
+        // Query Firestore to get the email associated with the username
+        final usernameQuery = await FirebaseFirestore.instance
+            .collection('users')
+            .where('username', isEqualTo: _enteredUsernameOrEmail)
+            .get();
+        if (usernameQuery.docs.isEmpty) {
           throw FirebaseAuthException(
-            code: 'email-already-in-use',
-            message: 'err_msg_email_exist'.tr(),
+            code: 'user-not-found',
+            message: 'err_msg_un_not_exist'.tr(),
           );
         }
-
-        // Check if username already exists
-        final usernameExists = await FirebaseFirestore.instance
-            .collection('users')
-            .where('username', isEqualTo: _enteredUsername)
-            .get();
-
-        if (usernameExists.docs.isNotEmpty) {
-          throw FirebaseAuthException(
-            code: 'username-already-in-use',
-            message: 'err_msg_un_exist'.tr(),
-          );
-        }
-
-        final userCredential = await fireAuth.createUserWithEmailAndPassword(
-          email: _enteredEmail,
-          password: _enteredPassword,
-        );
-        await userCredential.user!.updateDisplayName(_enteredUsername);
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .set({
-          'email': _enteredEmail,
-          'username': _enteredUsername,
-        });
+        email = usernameQuery.docs.first['email'];
       }
+      await fireAuth.signInWithEmailAndPassword(
+        email: email,
+        password: _enteredPassword,
+      );
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isAuthenticating = false;
@@ -131,75 +89,27 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (_isLogin)
-                          TextFormField(
-                            key: UniqueKey(),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              labelText: 'un_or_email'.tr(),
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(kDefaultPadding * 2),
-                                ),
+                        TextFormField(
+                          key: UniqueKey(),
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: 'un_or_email'.tr(),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(kDefaultPadding * 2),
                               ),
                             ),
-                            onSaved: (value) {
-                              _enteredUsernameOrEmail = value!;
-                            },
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'err_msg_email'.tr();
-                              }
-                              return null;
-                            },
                           ),
-                        if (!_isLogin) ...[
-                          TextFormField(
-                            key: UniqueKey(),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              labelText: 'email'.tr(),
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(kDefaultPadding * 2),
-                                ),
-                              ),
-                            ),
-                            onSaved: (value) {
-                              _enteredEmail = value!;
-                            },
-                            validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty ||
-                                  !value.contains('@')) {
-                                return 'err_msg_email'.tr();
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: kDefaultPadding - 5),
-                          TextFormField(
-                            key: UniqueKey(),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              labelText: 'username'.tr(),
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(kDefaultPadding * 2),
-                                ),
-                              ),
-                            ),
-                            onSaved: (value) {
-                              _enteredUsername = value!;
-                            },
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'err_msg_un'.tr();
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
+                          onSaved: (value) {
+                            _enteredUsernameOrEmail = value!;
+                          },
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'err_msg_email'.tr();
+                            }
+                            return null;
+                          },
+                        ),
                         const SizedBox(height: kDefaultPadding - 5),
                         TextFormField(
                           key: UniqueKey(),
@@ -233,21 +143,25 @@ class _AuthScreenState extends State<AuthScreen> {
                             fixedSize: const Size(
                                 double.maxFinite, kDefaultPadding * 2.8),
                           ),
-                          onPressed: _isAuthenticating ? null : _submit,
+                          onPressed: _isAuthenticating ? null : _logIn,
                           icon: const Icon(Icons.login),
-                          label: Text(_isLogin ? 'login' : 'sign up').tr(),
+                          label: const Text('login').tr(),
                         ),
                         const SizedBox(height: kDefaultPadding - 5),
                         TextButton(
                           onPressed: () {
-                            setState(() {
-                              _isLogin = !_isLogin;
-                            });
+                            // setState(() {
+                            //   _isLogin = !_isLogin;
+                            // });
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SignUpScreen(),
+                                fullscreenDialog: true,
+                              ),
+                            );
                             _form.currentState!.reset();
                           },
-                          child: Text(
-                            _isLogin ? 'sign up hint' : 'login hint',
-                          ).tr(),
+                          child: const Text('sign up hint').tr(),
                         ),
                       ],
                     ),
